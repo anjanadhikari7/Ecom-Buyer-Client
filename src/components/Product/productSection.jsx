@@ -40,7 +40,7 @@ const ProductSection = () => {
         }}
         ref={scrollRef}
       >
-        <Row className="flex-nowrap gap-2" style={{ margin: "0" }}>
+        <Row className="flex-nowrap gap-5" style={{ margin: "0" }}>
           {products.map((product) => (
             <Col
               key={product._id}
