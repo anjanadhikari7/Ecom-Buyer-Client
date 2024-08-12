@@ -1,0 +1,30 @@
+.loader {
+  gap: 10px;
+}
+
+.loader .dot {
+  width: 10px;
+  height: 10px;
+  background-color: #414141;
+  border-radius: 50%;
+  animation: bounce 0.3s infinite alternate;
+}
+
+.loader .dot:nth-child(2) {
+  animation-delay: 100ms;
+}
+.loader .dot:nth-child(3) {
+  animation-delay: 200ms;
+}
+.loader .dot:nth-child(4) {
+  animation-delay: 300ms;
+}
+.loader .dot:nth-child(5) {
+  animation-delay: 400ms;
+}
+
+@keyframes bounce {
+  100% {
+    translate: 0 -20px;
+  }
+}

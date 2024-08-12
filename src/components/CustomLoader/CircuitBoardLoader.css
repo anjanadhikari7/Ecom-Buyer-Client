@@ -1,0 +1,84 @@
+/* CircuitBoardLoader.css */
+.circuit-board-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+}
+
+.circuit-board {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.line {
+  position: absolute;
+  background: #0f0;
+  width: 2px;
+  height: 50px;
+  animation: line-animation 1.5s infinite;
+}
+
+.line:nth-child(1) {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 0s;
+}
+
+.line:nth-child(2) {
+  top: 50%;
+  left: 0;
+  height: 2px;
+  width: 100px;
+  animation-delay: 0.5s;
+}
+
+.node {
+  position: absolute;
+  background: #0f0;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: node-animation 1.5s infinite;
+}
+
+.node:nth-child(3) {
+  top: 10%;
+  left: 10%;
+  animation-delay: 1s;
+}
+
+.node:nth-child(4) {
+  top: 10%;
+  left: 70%;
+  animation-delay: 1.5s;
+}
+
+.node:nth-child(5) {
+  top: 70%;
+  left: 70%;
+  animation-delay: 2s;
+}
+
+@keyframes line-animation {
+  0%,
+  100% {
+    height: 0;
+  }
+  50% {
+    height: 50px;
+  }
+}
+
+@keyframes node-animation {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}

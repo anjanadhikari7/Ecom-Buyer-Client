@@ -1,0 +1,122 @@
+.navbar {
+  background-color: #eaf7cf;
+  width: 97vw !important;
+  position: fixed;
+  top: 0;
+  height: 130px;
+  z-index: 1;
+  text-align: center;
+  transition: 0.3s ease;
+  font-size: 24px;
+}
+
+.carousel {
+  background-color: #ebefbf;
+  margin-top: 8rem;
+  height: 400px;
+  width: 97vw;
+  padding: 200px;
+}
+
+.products {
+  background-color: #e4e1b9;
+  width: 97vw;
+}
+.links {
+  background-color: #ddd2b3;
+  width: 97vw;
+}
+.footer {
+  background-color: #d6c4ad;
+  width: 97vw;
+  position: static;
+  bottom: 0;
+}
+.icon {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.navbar-shrink {
+  padding-top: 5px;
+  height: 110px;
+}
+
+.content {
+  padding-top: 80px;
+}
+
+.icon {
+  font-size: 24px;
+  margin: 0 10px;
+}
+
+.transparent-modal .modal-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: blur(
+    10px
+  ); /* Optional: adds a blur effect to the background */
+}
+
+.transparent-modal .modal-dialog {
+  max-width: none;
+  margin: 0;
+}
+
+.transparent-modal .modal {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+search-modal-content .form-select,
+.search-modal-content .form-control,
+.search-modal-content .btn {
+  height: 40px;
+}
+
+.search-modal-content .form-select {
+  max-width: 150px;
+  background: transparent; /* Make dropdown fully transparent */
+  border: 1px solid #ccc; /* Optional: add border for visibility */
+  position: relative; /* Create positioning context */
+  padding-right: 30px; /* Space for the custom arrow */
+  color: #000; /* Text color */
+  -webkit-appearance: none; /* Remove default arrow */
+  -moz-appearance: none; /* Remove default arrow */
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+option {
+  background: rgba(255, 255, 255, 0.8); /* Make options transparent */
+  color: #000; /* Text color */
+}
+
+.search-modal-content .form-control {
+  flex: 1;
+  background: transparent;
+  color: #ccc;
+}
+
+.search-modal-content .btn {
+  height: 40px;
+}
+
+.search-modal-content .wide-input {
+  width: 100%;
+}
