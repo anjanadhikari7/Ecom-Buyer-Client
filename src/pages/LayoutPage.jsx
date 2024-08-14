@@ -20,7 +20,6 @@ const LayoutPage = () => {
         </div>
 
         <div className="p-2 carousel rounded">Carousel</div>
-        <div className="p-2 carousel rounded">Carousel</div>
         <div className="p-2 products rounded">
           <ProductSection />
         </div>
