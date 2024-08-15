@@ -20,6 +20,16 @@ const ProductSection = () => {
     return acc;
   }, {});
 
+  // Add "All Products" category at the beginning
+  groupedProducts["All Products"] = products;
+
+  const orderedCategories = [
+    "All Products",
+    ...Object.keys(groupedProducts).filter(
+      (category) => category !== "All Products"
+    ),
+  ];
+
   const scrollLeft = (category) => {
     scrollRefs.current[category].scrollBy({ left: -300, behavior: "smooth" });
   };
@@ -30,7 +40,8 @@ const ProductSection = () => {
 
   return (
     <div>
-      {Object.entries(groupedProducts).map(([category, products]) => {
+      {orderedCategories.map((category) => {
+        const products = groupedProducts[category];
         const showArrows = products.length > 4;
 
         return (

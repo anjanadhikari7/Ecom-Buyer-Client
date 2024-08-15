@@ -8,9 +8,15 @@ import {
   Col,
   Badge,
 } from "react-bootstrap";
+import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalQuantity } from "../../redux/cart/cartSlice";
+import { addToCartAction } from "../../redux/cart/cartAction";
 
 const ProductCard = ({ product }) => {
+  const { items, totalQuantity } = useSelector((state) => state.cart);
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -44,150 +50,189 @@ const ProductCard = ({ product }) => {
     ? Math.round(((product.price - product.salesPrice) / product.price) * 100)
     : 0;
 
+  const handleAddtoCart = () => {
+    dispatch(addToCartAction(product, items, totalQuantity));
+  };
+
   return (
-    <Card
-      style={{
-        width: "20rem",
-        margin: "15px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <div
+    <motion.div whileHover={{ scale: 1.05 }} style={{ perspective: "1000px" }}>
+      <Card
         style={{
-          height: "250px",
+          width: "20rem",
+          margin: "15px",
+          borderRadius: "15px",
           overflow: "hidden",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "10px 10px 0 0",
-          backgroundColor: "#f8f9fa",
+          background: "rgba(255, 255, 255, 0.8)",
+          backdropFilter: "blur(10px)",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+          transition: "transform 0.3s ease-in-out",
         }}
       >
-        <Card.Img
-          variant="top"
-          src={product.thumbnail}
-          alt={product.name}
+        <motion.div
+          whileHover={{ rotateY: 10 }}
           style={{
-            height: "100%",
-            width: "100%",
-            objectFit: "cover",
-          }}
-        />
-      </div>
-      <Card.Body style={{ padding: "20px" }}>
-        <Card.Title style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
-          {product.name}
-        </Card.Title>
-        <Card.Text
-          style={{
-            color: "#6c757d",
-            fontSize: "0.9rem",
-            marginBottom: "1rem",
+            height: "250px",
             overflow: "hidden",
-            textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 3, // Limits the text to 3 lines
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "transparent",
           }}
         >
-          {product.description}
-        </Card.Text>
-        <Card.Text style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-          {productIsOnSale ? (
-            <>
-              <span style={{ color: "red", fontSize: "1.2rem" }}>
-                ${product.salesPrice}
-              </span>{" "}
-              <span
-                style={{ textDecoration: "line-through", color: "#6c757d" }}
-              >
-                ${product.price}
-              </span>{" "}
-              <Badge bg="danger" className="ms-2">
-                {discountPercentage}% OFF
-              </Badge>
-            </>
-          ) : (
-            <span style={{ color: "#28a745" }}>${product.price}</span>
-          )}{" "}
-          | QTY: {product.quantity}
-        </Card.Text>
+          <Card.Img
+            variant="top"
+            src={product.thumbnail}
+            alt={product.name}
+            style={{
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+              transition: "transform 0.3s ease-in-out",
+            }}
+          />
+        </motion.div>
+        <Card.Body style={{ padding: "20px" }}>
+          <Card.Title
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+              textAlign: "center",
+              marginBottom: "1rem",
+              color: "#333",
+            }}
+          >
+            {product.name}
+          </Card.Title>
+          <Card.Text
+            style={{
+              color: "#6c757d",
+              fontSize: "0.9rem",
+              marginBottom: "1rem",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2, // Limits the text to 2 lines
+              textAlign: "center",
+            }}
+          >
+            {product.description}
+          </Card.Text>
+          <Card.Text
+            style={{
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              textAlign: "center",
+              marginBottom: "1rem",
+            }}
+          >
+            {productIsOnSale ? (
+              <>
+                <span style={{ color: "red", fontSize: "1.3rem" }}>
+                  ${product.salesPrice}
+                </span>{" "}
+                <span
+                  style={{
+                    textDecoration: "line-through",
+                    color: "#6c757d",
+                    fontSize: "1rem",
+                  }}
+                >
+                  ${product.price}
+                </span>{" "}
+                <Badge bg="danger" className="ms-2">
+                  {discountPercentage}% OFF
+                </Badge>
+              </>
+            ) : (
+              <span style={{ color: "#28a745" }}>${product.price}</span>
+            )}
+            {" | "}QTY: {product.quantity}
+          </Card.Text>
 
-        {/* Quantity Selector and Add to Cart Button */}
-        <Row className="align-items-center">
-          <Col xs="auto">
-            <InputGroup
-              className="mb-3"
-              style={{ width: "100%", maxWidth: "10rem" }}
-            >
+          {/* Quantity Selector and Add to Cart Button */}
+          <Row className="align-items-center justify-content-center">
+            <Col xs="auto">
+              <InputGroup
+                className="mb-3"
+                style={{ width: "100%", maxWidth: "10rem" }}
+              >
+                <Button
+                  variant="outline-secondary"
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    fontSize: "1.5rem",
+                    padding: "0.5rem",
+                    transition: "color 0.3s",
+                  }}
+                  onClick={decreaseQuantity}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#007bff")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#000")}
+                >
+                  -
+                </Button>
+                <FormControl
+                  type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  className="no-arrow"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  style={{
+                    textAlign: "center",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    borderBottom: "2px solid #ced4da",
+                    fontSize: "1.2rem",
+                    width: "3rem",
+                  }}
+                  min="1"
+                  max={product.quantity}
+                />
+                <Button
+                  variant="outline-secondary"
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    fontSize: "1.5rem",
+                    padding: "0.5rem",
+                    transition: "color 0.3s",
+                  }}
+                  onClick={increaseQuantity}
+                  onMouseOver={(e) => (e.currentTarget.style.color = "#007bff")}
+                  onMouseOut={(e) => (e.currentTarget.style.color = "#000")}
+                >
+                  +
+                </Button>
+              </InputGroup>
+            </Col>
+            <Col xs="auto">
               <Button
-                variant="outline-secondary"
+                variant="primary"
                 style={{
+                  width: "100%",
+                  backgroundColor: "#007bff",
                   border: "none",
-                  borderRadius: "0.25rem",
-                  backgroundColor: "#f8f9fa",
-                  fontSize: "1.5rem",
-                  padding: "0.5rem",
-                  transition: "background-color 0.3s",
+                  padding: "0.75rem 1.5rem",
+                  borderRadius: "50px",
+                  transition: "background-color 0.3s ease",
                 }}
-                onClick={decreaseQuantity}
                 onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#e9ecef")
+                  (e.currentTarget.style.backgroundColor = "#0056b3")
                 }
                 onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#f8f9fa")
+                  (e.currentTarget.style.backgroundColor = "#007bff")
                 }
+                onClick={handleAddtoCart}
               >
-                -
+                Add to Cart
               </Button>
-              <FormControl
-                type="number"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                className="no-arrow"
-                value={quantity}
-                onChange={handleQuantityChange}
-                style={{
-                  textAlign: "center",
-                  backgroundColor: "#fff",
-                  border: "1px solid #ced4da",
-                  borderRadius: "0.25rem",
-                  fontSize: "1.2rem",
-                  width: "3rem", // Increased width for better visibility
-                }}
-                min="1"
-                max={product.quantity}
-              />
-              <Button
-                variant="outline-secondary"
-                style={{
-                  border: "none",
-                  borderRadius: "0.25rem",
-                  backgroundColor: "#f8f9fa",
-                  fontSize: "1.5rem",
-                  padding: "0.5rem",
-                  transition: "background-color 0.3s",
-                }}
-                onClick={increaseQuantity}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#e9ecef")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundColor = "#f8f9fa")
-                }
-              >
-                +
-              </Button>
-            </InputGroup>
-          </Col>
-          <Col>
-            <Button variant="success" style={{ width: "100%" }}>
-              Add to Cart
-            </Button>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
+    </motion.div>
   );
 };
 

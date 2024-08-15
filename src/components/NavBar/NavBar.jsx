@@ -19,6 +19,7 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
   const { handleOnChange, formData } = useForm(initialFormData);
   const { categories } = useSelector((state) => state.category);
+  const { totalQuantity } = useSelector((state) => state.cart);
 
   const handleScroll = () => {
     if (window.scrollY > 20) {
@@ -71,7 +72,32 @@ const NavBar = () => {
             >
               <IoIosSearch className="icon" onClick={handleModal} />
               <FaRegUserCircle className="icon" />
-              <MdOutlineShoppingCart className="icon" />
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <MdOutlineShoppingCart className="icon" />
+                {totalQuantity > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "-5px",
+                      backgroundColor: "red",
+                      color: "white",
+                      borderRadius: "50%",
+                      padding: "2px 6px",
+                      fontSize: "0.75rem",
+                      fontWeight: "bold",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "20px",
+                      height: "20px",
+                      lineHeight: "20px",
+                    }}
+                  >
+                    {totalQuantity}
+                  </span>
+                )}
+              </div>
             </Col>
           </Row>
         </Container>
