@@ -6,8 +6,7 @@ export const addToCartAction =
     if (existingItem) {
     } else {
       totalQuantity = totalQuantity + 1;
-      console.log(totalQuantity);
 
-      setTotalQuantity(totalQuantity);
+      dispatch(setTotalQuantity(totalQuantity));
     }
   };
