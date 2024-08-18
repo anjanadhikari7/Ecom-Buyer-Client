@@ -38,12 +38,14 @@ const ProductSection = () => {
   const displayedProducts = sortedProducts();
   const currentCategory =
     sortBy === "Categories" ? Object.keys(displayedProducts) : ["All Products"];
+
+  // Calculate total pages for the current category
   const totalPages = Math.ceil(
-    displayedProducts[currentCategory].length / productsPerPage
+    displayedProducts[currentCategory[0]].length / productsPerPage
   );
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = displayedProducts[currentCategory].slice(
+  const currentProducts = displayedProducts[currentCategory[0]].slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
