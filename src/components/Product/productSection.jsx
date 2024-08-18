@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Pagination, Dropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ProductCard from "./productCard";
@@ -7,8 +7,31 @@ const ProductSection = () => {
   const { products } = useSelector((state) => state.product);
   const [sortBy, setSortBy] = useState("All"); // Default sorting
   const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage, setProductsPerPage] = useState(8); // Default, will be adjusted based on screen size
 
-  const productsPerPage = 8; // 4 products per row, 2 rows per page
+  useEffect(() => {
+    const updateProductsPerPage = () => {
+      // Adjust products per page based on screen width
+      if (window.innerWidth < 576) {
+        setProductsPerPage(2); // Mobile: 1 product per row, 2 rows per page
+      } else if (window.innerWidth < 768) {
+        setProductsPerPage(4); // Tablet: 2 products per row, 2 rows per page
+      } else if (window.innerWidth < 992) {
+        setProductsPerPage(6); // Small desktop: 3 products per row, 2 rows per page
+      } else {
+        setProductsPerPage(8); // Large desktop: 4 products per row, 2 rows per page
+      }
+    };
+
+    // Initial call
+    updateProductsPerPage();
+
+    // Add event listener
+    window.addEventListener("resize", updateProductsPerPage);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", updateProductsPerPage);
+  }, []);
 
   // Group products by parentCategory
   const groupedProducts = products.reduce((acc, product) => {
@@ -122,12 +145,14 @@ const ProductSection = () => {
                     onClick={() => handlePageChange(index + 1)}
                     style={{
                       backgroundColor:
-                        index + 1 === currentPage ? "#FF5733" : "#fff",
-                      color: index + 1 === currentPage ? "#fff" : "#000",
-                      borderColor: "#FF5733",
+                        index + 1 === currentPage ? "#007bff" : "#fff",
+                      color: index + 1 === currentPage ? "#fff" : "#007bff",
+                      borderColor: "#007bff",
                       borderRadius: "50%",
-                      padding: "0.5rem 0.8rem",
+                      padding: "0.4rem 0.8rem",
                       margin: "0 0.25rem",
+                      fontSize: "0.875rem",
+                      fontWeight: "500",
                     }}
                   >
                     {index + 1}
