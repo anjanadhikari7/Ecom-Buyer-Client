@@ -11,7 +11,6 @@ import {
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalQuantity } from "../../redux/cart/cartSlice";
-import { addToCartAction } from "../../redux/cart/cartAction";
 
 const ProductCard = ({ product }) => {
   const { items, totalQuantity } = useSelector((state) => state.cart);
@@ -51,7 +50,11 @@ const ProductCard = ({ product }) => {
     : 0;
 
   const handleAddtoCart = () => {
-    dispatch(addToCartAction(product, items, totalQuantity));
+    const existingItem = items.find((item) => item._id === product._id);
+    if (existingItem) {
+    } else {
+      dispatch(setTotalQuantity(totalQuantity + 1));
+    }
   };
 
   return (
