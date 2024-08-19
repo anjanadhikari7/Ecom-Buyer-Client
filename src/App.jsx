@@ -7,13 +7,17 @@ import CheckoutPage from "./pages/CheckoutPages";
 import HomePage from "./pages/HomePage";
 import LayoutPage from "./pages/LayoutPage";
 import "./App.css";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LayoutPage />} />
-        <Route path="/Home" element={<HomePage />} />
+        <Route path="/" element={<LayoutPage />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/user:_id" element={<UserPage />} />
+        </Route>
+
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>

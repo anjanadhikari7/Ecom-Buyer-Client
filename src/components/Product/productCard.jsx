@@ -51,8 +51,7 @@ const ProductCard = ({ product }) => {
 
   const handleAddtoCart = () => {
     const existingItem = items.find((item) => item._id === product._id);
-    if (existingItem) {
-    } else {
+    if (!existingItem) {
       dispatch(setTotalQuantity(totalQuantity + 1));
     }
   };
@@ -61,7 +60,8 @@ const ProductCard = ({ product }) => {
     <motion.div whileHover={{ scale: 1.05 }} style={{ perspective: "1000px" }}>
       <Card
         style={{
-          width: "20rem",
+          width: "100%",
+          maxWidth: "20rem",
           margin: "15px",
           borderRadius: "15px",
           overflow: "hidden",
@@ -69,6 +69,11 @@ const ProductCard = ({ product }) => {
           backdropFilter: "blur(10px)",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
           transition: "transform 0.3s ease-in-out",
+          height: "460px",
+          // Ensure the card takes up full height
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between", // Distribute space evenly
         }}
       >
         <motion.div
@@ -94,7 +99,14 @@ const ProductCard = ({ product }) => {
             }}
           />
         </motion.div>
-        <Card.Body style={{ padding: "20px" }}>
+        <Card.Body
+          style={{
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+        >
           <Card.Title
             style={{
               fontSize: "1.5rem",

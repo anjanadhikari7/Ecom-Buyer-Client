@@ -1,10 +1,11 @@
 import { Container, Stack } from "react-bootstrap";
 import NavBar from "../components/NavBar/NavBar";
-import ProductSection from "../components/Product/productSection";
+
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getProductsAction } from "../redux/product/productActions";
 import { getCategoriesAction } from "../redux/category/categoryActions";
+import { Outlet } from "react-router-dom";
 
 const LayoutPage = () => {
   const dispatch = useDispatch();
@@ -18,13 +19,7 @@ const LayoutPage = () => {
         <div className="p-2 rounded navbar ">
           <NavBar />
         </div>
-
-        <div className="p-2 carousel rounded">Carousel</div>
-        <div className="p-2 products rounded">
-          <ProductSection />
-        </div>
-        <div className="p-2 links rounded">Links</div>
-        <div className="p-2 footer rounded">Footer</div>
+        <Outlet />
       </Stack>
     </Container>
   );

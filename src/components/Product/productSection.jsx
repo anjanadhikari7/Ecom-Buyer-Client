@@ -150,9 +150,12 @@ const ProductSection = () => {
                       borderColor: "#007bff",
                       borderRadius: "50%",
                       padding: "0.4rem 0.8rem",
-                      margin: "0 0.25rem",
+                      margin: "0 0.25rem", // Adjusts the gap between items
                       fontSize: "0.875rem",
                       fontWeight: "500",
+                      display: "inline-flex", // Ensures items are aligned properly
+                      justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {index + 1}
