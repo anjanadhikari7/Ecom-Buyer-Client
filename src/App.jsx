@@ -16,6 +16,8 @@ function App() {
         <Route path="/" element={<LayoutPage />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/user:_id" element={<UserPage />} />
+
+          <Route path="checkout" element={<CheckoutPage />} />
         </Route>
 
         <Route path="/payment-success" element={<PaymentSuccessPage />} />

@@ -14,10 +14,13 @@ const Carousel = () => {
   return (
     <Swiper
       spaceBetween={30}
+      rewind={true}
       centeredSlides={true}
       autoplay={{
-        delay: 2500,
+        delay: 10000, // Slower transition time
         disableOnInteraction: false,
+        pauseOnMouseEnter: true, // Stops autoplay on hover
+        resumeOnMouseLeave: true, // Resumes autoplay when mouse leaves
       }}
       pagination={{
         clickable: true,

@@ -16,7 +16,7 @@ const LayoutPage = () => {
   return (
     <Container fluid style={{ margin: 0 }}>
       <Stack gap={3}>
-        <div className="p-2 rounded navbar ">
+        <div>
           <NavBar />
         </div>
         <Outlet />

@@ -3,7 +3,8 @@
   width: 100vw !important;
   position: fixed;
   top: 0;
-  height: 130px;
+  left: 0;
+  height: auto;
   z-index: 1000;
   text-align: center;
   transition: 0.3s ease;
@@ -13,7 +14,8 @@
 .carousel {
   background-color: #ebefbf;
   margin-top: 8rem;
-  height: 400px;
+  left: 0;
+  height: auto;
   width: 97vw;
   padding: 200px;
 }
@@ -40,7 +42,6 @@
 .navbar-shrink {
   padding-top: 5px;
   height: 110px;
-  box-shadow: none !important;
 }
 
 .content {
