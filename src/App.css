@@ -132,3 +132,27 @@ option {
 .no-arrow[type="number"] {
   -moz-appearance: textfield;
 }
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.category-card {
+  background-color: transparent;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.category-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 10px auto;
+}

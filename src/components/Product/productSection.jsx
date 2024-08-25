@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Row, Col, Pagination, Dropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ProductCard from "./productCard";
+// import noProductsGif from "../assets/no-products.gif"; // Add your own GIF here
 
 const ProductSection = () => {
   const { products } = useSelector((state) => state.product);
   const [sortBy, setSortBy] = useState("All"); // Default sorting
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(8); // Default, will be adjusted based on screen size
+  const categoryRefs = useRef({}); // To store refs for each category section
 
   useEffect(() => {
     const updateProductsPerPage = () => {
@@ -77,6 +79,15 @@ const ProductSection = () => {
     setCurrentPage(pageNumber);
   };
 
+  const scrollToCategory = (category) => {
+    if (categoryRefs.current[category]) {
+      categoryRefs.current[category].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -114,15 +125,33 @@ const ProductSection = () => {
 
       {sortBy === "Categories" ? (
         Object.keys(displayedProducts).map((category) => (
-          <div key={category} style={{ marginBottom: "2rem" }}>
+          <div
+            key={category}
+            ref={(el) => (categoryRefs.current[category] = el)}
+            style={{ marginBottom: "2rem" }}
+          >
             <h3>{category}</h3>
-            <Row className="g-4">
-              {displayedProducts[category].map((product) => (
-                <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
-                  <ProductCard product={product} />
-                </Col>
-              ))}
-            </Row>
+            {displayedProducts[category].length > 0 ? (
+              <Row className="g-4">
+                {displayedProducts[category].map((product) => (
+                  <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
+                    <ProductCard product={product} />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <div className="text-center">
+                <img
+                  src={noProductsGif}
+                  alt="No products available"
+                  style={{ width: "300px", marginBottom: "1rem" }}
+                />
+                <p>No products available in this category.</p>
+                <a href="#all-products" onClick={() => setSortBy("All")}>
+                  View All Products
+                </a>
+              </div>
+            )}
           </div>
         ))
       ) : (
