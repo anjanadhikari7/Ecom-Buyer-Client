@@ -6,15 +6,15 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "./Carousel.css";
 
-import component from "../../assets/components.jpeg";
-import console from "../../assets/console.jpg";
+import accessories from "../../assets/acc.jpg";
+import playstation from "../../assets/playstation.jpg";
 import home from "../../assets/home.png";
 import phone from "../../assets/phones.jpg";
 
 const Carousel = () => {
   return (
     <Swiper
-      spaceBetween={30}
+      spaceBetween={20}
       rewind={true}
       centeredSlides={true}
       autoplay={{
@@ -38,14 +38,19 @@ const Carousel = () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className="carousel-slide">
-          <img src={phone} alt="Console Image" />
+          <img src={phone} alt="Phone Image" />
           <button className="shop-now-btn">Shop Now</button>
         </div>
       </SwiperSlide>
-
       <SwiperSlide>
         <div className="carousel-slide">
-          <img src={component} alt="Component Image" />
+          <img src={accessories} alt="Accessories Image" />
+          <button className="shop-now-btn">Shop Now</button>
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="carousel-slide">
+          <img src={playstation} alt="PlayStation Image" />
           <button className="shop-now-btn">Shop Now</button>
         </div>
       </SwiperSlide>
