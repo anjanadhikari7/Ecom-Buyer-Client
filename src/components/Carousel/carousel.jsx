@@ -9,6 +9,7 @@ import "./Carousel.css";
 import component from "../../assets/components.jpeg";
 import console from "../../assets/console.jpg";
 import home from "../../assets/home.png";
+import phone from "../../assets/phones.jpg";
 
 const Carousel = () => {
   return (
@@ -37,7 +38,7 @@ const Carousel = () => {
       </SwiperSlide>
       <SwiperSlide>
         <div className="carousel-slide">
-          <img src={console} alt="Console Image" />
+          <img src={phone} alt="Console Image" />
           <button className="shop-now-btn">Shop Now</button>
         </div>
       </SwiperSlide>

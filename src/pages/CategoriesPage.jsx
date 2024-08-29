@@ -20,11 +20,7 @@ const CategoriesPage = () => {
           <Card
             className="category-card text-center"
             onClick={() => handleCategoryClick(category.title)}
-            style={{ cursor: "pointer", transition: "transform 0.3s ease" }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "scale(1.1)")
-            }
-            onMouseOut={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            style={{ cursor: "pointer" }}
           >
             <Card.Img
               variant="top"

@@ -8,7 +8,6 @@ import {
   Col,
   Badge,
 } from "react-bootstrap";
-import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setTotalQuantity } from "../../redux/cart/cartSlice";
 
@@ -57,29 +56,30 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <motion.div whileHover={{ scale: 1.05 }} style={{ perspective: "1000px" }}>
+    <div style={{ perspective: "1000px" }}>
       <Card
         style={{
           width: "100%",
-          maxWidth: "20rem",
+          maxWidth: "16rem", // Further reduced size
           margin: "15px",
           borderRadius: "15px",
           overflow: "hidden",
-          background: "rgba(255, 255, 255, 0.8)",
+          background:
+            "linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.8))",
           backdropFilter: "blur(10px)",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-          transition: "transform 0.3s ease-in-out",
-          height: "460px",
-          // Ensure the card takes up full height
+          transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          height: "380px", // Reduced height
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between", // Distribute space evenly
+          justifyContent: "space-between",
+          border: "1px solid rgba(255, 255, 255, 0.5)",
         }}
+        className="product-card"
       >
-        <motion.div
-          whileHover={{ rotateY: 10 }}
+        <div
           style={{
-            height: "250px",
+            height: "240px", // Increased height for thumbnail
             overflow: "hidden",
             display: "flex",
             justifyContent: "center",
@@ -97,88 +97,78 @@ const ProductCard = ({ product }) => {
               objectFit: "cover",
               transition: "transform 0.3s ease-in-out",
             }}
+            className="product-image"
           />
-        </motion.div>
+        </div>
         <Card.Body
           style={{
-            padding: "20px",
+            padding: "10px", // Adjusted padding
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
+            alignItems: "center", // Centered content
           }}
         >
-          <Card.Title
+          <div
             style={{
-              fontSize: "1.5rem",
-              fontWeight: "bold",
-              textAlign: "center",
-              marginBottom: "1rem",
-              color: "#333",
-            }}
-          >
-            {product.name}
-          </Card.Title>
-          <Card.Text
-            style={{
-              color: "#6c757d",
-              fontSize: "0.9rem",
-              marginBottom: "1rem",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 2, // Limits the text to 2 lines
               textAlign: "center",
             }}
           >
-            {product.description}
-          </Card.Text>
-          <Card.Text
-            style={{
-              fontSize: "1.1rem",
-              fontWeight: "bold",
-              textAlign: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            {productIsOnSale ? (
-              <>
-                <span style={{ color: "red", fontSize: "1.3rem" }}>
-                  ${product.salesPrice}
-                </span>{" "}
-                <span
-                  style={{
-                    textDecoration: "line-through",
-                    color: "#6c757d",
-                    fontSize: "1rem",
-                  }}
-                >
-                  ${product.price}
-                </span>{" "}
-                <Badge bg="danger" className="ms-2">
-                  {discountPercentage}% OFF
-                </Badge>
-              </>
-            ) : (
-              <span style={{ color: "#28a745" }}>${product.price}</span>
-            )}
-            {" | "}QTY: {product.quantity}
-          </Card.Text>
+            <Card.Title
+              style={{
+                fontSize: "1.1rem", // Slightly smaller font size
+                fontWeight: "bold",
+                color: "#333",
+                marginBottom: "0.25rem",
+              }}
+            >
+              {product.name}
+            </Card.Title>
+            <Card.Text
+              style={{
+                fontSize: "1rem", // Adjusted font size
+                fontWeight: "bold",
+                color: "#28a745",
+                marginBottom: "0.5rem",
+              }}
+            >
+              {productIsOnSale ? (
+                <>
+                  <span style={{ color: "red", fontSize: "1.1rem" }}>
+                    ${product.salesPrice}
+                  </span>{" "}
+                  <span
+                    style={{
+                      textDecoration: "line-through",
+                      color: "#6c757d",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    ${product.price}
+                  </span>{" "}
+                  <Badge bg="danger" className="ms-2">
+                    {discountPercentage}% OFF
+                  </Badge>
+                </>
+              ) : (
+                <span>${product.price}</span>
+              )}
+            </Card.Text>
+          </div>
 
           {/* Quantity Selector and Add to Cart Button */}
           <Row className="align-items-center justify-content-center">
             <Col xs="auto">
               <InputGroup
                 className="mb-3"
-                style={{ width: "100%", maxWidth: "10rem" }}
+                style={{ width: "100%", maxWidth: "8rem" }} // Adjusted max width
               >
                 <Button
                   variant="outline-secondary"
                   style={{
                     border: "none",
                     backgroundColor: "transparent",
-                    fontSize: "1.5rem",
-                    padding: "0.5rem",
+                    fontSize: "1.2rem",
+                    padding: "0.4rem",
                     transition: "color 0.3s",
                   }}
                   onClick={decreaseQuantity}
@@ -199,8 +189,8 @@ const ProductCard = ({ product }) => {
                     backgroundColor: "transparent",
                     border: "none",
                     borderBottom: "2px solid #ced4da",
-                    fontSize: "1.2rem",
-                    width: "3rem",
+                    fontSize: "1.1rem",
+                    width: "2.5rem",
                   }}
                   min="1"
                   max={product.quantity}
@@ -210,8 +200,8 @@ const ProductCard = ({ product }) => {
                   style={{
                     border: "none",
                     backgroundColor: "transparent",
-                    fontSize: "1.5rem",
-                    padding: "0.5rem",
+                    fontSize: "1.2rem",
+                    padding: "0.4rem",
                     transition: "color 0.3s",
                   }}
                   onClick={increaseQuantity}
@@ -229,7 +219,7 @@ const ProductCard = ({ product }) => {
                   width: "100%",
                   backgroundColor: "#007bff",
                   border: "none",
-                  padding: "0.75rem 1.5rem",
+                  padding: "0.5rem 1.2rem", // Adjusted padding
                   borderRadius: "50px",
                   transition: "background-color 0.3s ease",
                 }}
@@ -247,7 +237,17 @@ const ProductCard = ({ product }) => {
           </Row>
         </Card.Body>
       </Card>
-    </motion.div>
+
+      <style jsx>{`
+        .product-card:hover {
+          box-shadow: 0 10px 30px rgba(20, 128, 255, 0.5);
+        }
+
+        .product-image:hover {
+          transform: scale(1.05);
+        }
+      `}</style>
+    </div>
   );
 };
 
