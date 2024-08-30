@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import LayoutPage from "./pages/LayoutPage";
 import "./App.css";
 import UserPage from "./pages/UserPage";
+import AboutUsPage from "./components/About Us/AboutUs";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route path="/" element={<LayoutPage />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/user:_id" element={<UserPage />} />
-
+          <Route path="/about" element={<AboutUsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
         </Route>
 

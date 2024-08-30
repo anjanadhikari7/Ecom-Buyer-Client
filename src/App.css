@@ -9,6 +9,7 @@
   transition: 0.1s ease;
   font-size: 24px;
   background-color: #ccc;
+  transition: all 0.3s ease-in-out;
 }
 
 .carousel {
@@ -36,8 +37,16 @@
 }
 
 .navbar-shrink {
-  padding-top: 5px;
-  height: 110px;
+  padding: 10px 0;
+  background-color: #afabab;
+}
+.logo {
+  height: 100px;
+  transition: height 0.3s ease-in-out;
+}
+
+.logo-shrink {
+  height: 50px;
 }
 
 .content {
@@ -48,7 +57,9 @@
   font-size: 24px;
   margin: 0 10px;
 }
-
+.icon:hover {
+  color: #007bff;
+}
 .transparent-modal .modal-content {
   background: transparent;
   border: none;
@@ -145,9 +156,28 @@ option {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+.categories-page {
+  padding: 20px;
+}
+
+.category-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.category-card:hover {
+  transform: scale(1.02);
+}
+
 .category-image {
-  width: 100px;
-  height: 100px;
+  height: 200px;
   object-fit: cover;
-  margin: 10px auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+button {
+  font-size: 16px;
 }

@@ -20,7 +20,6 @@ function HomePage() {
         <ProductSection selectedCategory={selectedCategory} />
       </div>
       <div className="p-2 links rounded">Links</div>
-      <div className="p-2 footer rounded">Footer</div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { getProductsAction } from "../redux/product/productActions";
 import { getCategoriesAction } from "../redux/category/categoryActions";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer/Footer";
 
 const LayoutPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,9 @@ const LayoutPage = () => {
           <NavBar />
         </div>
         <Outlet />
+        <div className="p-2 footer rounded">
+          <Footer />
+        </div>
       </Stack>
     </Container>
   );

@@ -35,6 +35,7 @@ const NavBar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   const handleModal = () => {
     setShowModal(!showModal);
   };
@@ -48,20 +49,21 @@ const NavBar = () => {
         <Container>
           <Row className="w-100 align-items-center">
             <Col xs={4} className="d-flex align-items-center">
-              <Navbar.Brand href="#home">
+              <Navbar.Brand href="/">
                 <img
                   src={logo}
-                  height="100"
-                  className="d-inline-block align-top p-0"
+                  className={`d-inline-block align-top p-0 logo ${
+                    scrolled ? "logo-shrink" : ""
+                  }`}
                   alt="Logo"
                 />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="#home">Home</Nav.Link>
+                  <Nav.Link href="/">Home</Nav.Link>
                   <Nav.Link href="#shop">Shop</Nav.Link>
-                  <Nav.Link href="#about">About</Nav.Link>
+                  <Nav.Link href="/about">About</Nav.Link>
                   <Nav.Link href="#contact">Contact</Nav.Link>
                 </Nav>
               </Navbar.Collapse>
