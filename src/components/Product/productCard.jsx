@@ -9,10 +9,10 @@ import {
   Badge,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setTotalQuantity } from "../../redux/cart/cartSlice";
+// import { addItemToCart } from "../../redux/cart/cartSlice";
 
 const ProductCard = ({ product }) => {
-  const { items, totalQuantity } = useSelector((state) => state.cart);
+  const { items } = useSelector((state) => state.cart);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
@@ -50,8 +50,18 @@ const ProductCard = ({ product }) => {
 
   const handleAddtoCart = () => {
     const existingItem = items.find((item) => item._id === product._id);
-    if (!existingItem) {
-      dispatch(setTotalQuantity(totalQuantity + 1));
+
+    if (existingItem) {
+      // If item already exists, update the quantity
+      dispatch(
+        addItemToCart({
+          ...existingItem,
+          quantity: existingItem.quantity + quantity,
+        })
+      );
+    } else {
+      // If item does not exist, add it to the cart
+      dispatch(addItemToCart({ ...product, quantity }));
     }
   };
 
@@ -60,7 +70,7 @@ const ProductCard = ({ product }) => {
       <Card
         style={{
           width: "100%",
-          maxWidth: "16rem", // Further reduced size
+          maxWidth: "16rem",
           margin: "15px",
           borderRadius: "15px",
           overflow: "hidden",
@@ -69,7 +79,7 @@ const ProductCard = ({ product }) => {
           backdropFilter: "blur(10px)",
           boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
           transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-          height: "380px", // Reduced height
+          height: "380px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -79,7 +89,7 @@ const ProductCard = ({ product }) => {
       >
         <div
           style={{
-            height: "240px", // Increased height for thumbnail
+            height: "240px",
             overflow: "hidden",
             display: "flex",
             justifyContent: "center",
@@ -102,10 +112,10 @@ const ProductCard = ({ product }) => {
         </div>
         <Card.Body
           style={{
-            padding: "10px", // Adjusted padding
+            padding: "10px",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", // Centered content
+            alignItems: "center",
           }}
         >
           <div
@@ -115,7 +125,7 @@ const ProductCard = ({ product }) => {
           >
             <Card.Title
               style={{
-                fontSize: "1.1rem", // Slightly smaller font size
+                fontSize: "1.1rem",
                 fontWeight: "bold",
                 color: "#333",
                 marginBottom: "0.25rem",
@@ -125,7 +135,7 @@ const ProductCard = ({ product }) => {
             </Card.Title>
             <Card.Text
               style={{
-                fontSize: "1rem", // Adjusted font size
+                fontSize: "1rem",
                 fontWeight: "bold",
                 color: "#28a745",
                 marginBottom: "0.5rem",
@@ -160,7 +170,7 @@ const ProductCard = ({ product }) => {
             <Col xs="auto">
               <InputGroup
                 className="mb-3"
-                style={{ width: "100%", maxWidth: "8rem" }} // Adjusted max width
+                style={{ width: "100%", maxWidth: "8rem" }}
               >
                 <Button
                   variant="outline-secondary"
@@ -219,7 +229,7 @@ const ProductCard = ({ product }) => {
                   width: "100%",
                   backgroundColor: "#007bff",
                   border: "none",
-                  padding: "0.5rem 1.2rem", // Adjusted padding
+                  padding: "0.5rem 1.2rem",
                   borderRadius: "50px",
                   transition: "background-color 0.3s ease",
                 }}

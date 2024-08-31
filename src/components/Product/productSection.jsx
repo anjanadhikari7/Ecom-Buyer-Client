@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Row, Col, Pagination, Dropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ProductCard from "./productCard";
+import Product from "./product";
 // import noProductsGif from "../assets/no-products.gif"; // Add your own GIF here
 
 const ProductSection = () => {
@@ -135,7 +136,7 @@ const ProductSection = () => {
               <Row className="g-4">
                 {displayedProducts[category].map((product) => (
                   <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
-                    <ProductCard product={product} />
+                    <Product product={product} />
                   </Col>
                 ))}
               </Row>
@@ -159,7 +160,7 @@ const ProductSection = () => {
           <Row className="g-4">
             {currentProducts.map((product) => (
               <Col key={product._id} xs={12} sm={6} md={4} lg={3}>
-                <ProductCard product={product} />
+                <Product product={product} />
               </Col>
             ))}
           </Row>

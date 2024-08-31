@@ -1,0 +1,13 @@
+/* In your CartPage.css or equivalent */
+.list-group-item {
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+}
+
+.list-group-item img {
+  border-radius: 0.25rem;
+}
+
+.card {
+  border: 1px solid #ddd;
+}

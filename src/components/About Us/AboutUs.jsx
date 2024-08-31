@@ -44,7 +44,7 @@ const AboutUsPage = () => {
               alt="Team Member"
             />
             <Card.Body>
-              <Card.Title>John Doe</Card.Title>
+              <Card.Title>Anjan Adhikari</Card.Title>
               <Card.Text>Founder & CEO</Card.Text>
             </Card.Body>
           </Card>
@@ -57,7 +57,7 @@ const AboutUsPage = () => {
               alt="Team Member"
             />
             <Card.Body>
-              <Card.Title>Jane Smith</Card.Title>
+              <Card.Title>Person 2</Card.Title>
               <Card.Text>Chief Technology Officer</Card.Text>
             </Card.Body>
           </Card>
@@ -70,7 +70,7 @@ const AboutUsPage = () => {
               alt="Team Member"
             />
             <Card.Body>
-              <Card.Title>Emily Johnson</Card.Title>
+              <Card.Title>Person 3</Card.Title>
               <Card.Text>Marketing Manager</Card.Text>
             </Card.Body>
           </Card>

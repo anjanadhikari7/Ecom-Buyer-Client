@@ -9,6 +9,7 @@ import LayoutPage from "./pages/LayoutPage";
 import "./App.css";
 import UserPage from "./pages/UserPage";
 import AboutUsPage from "./components/About Us/AboutUs";
+import ProductPage from "./pages/ProductPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutPage />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/product:sku" element={<ProductPage />} />
           <Route path="/user:_id" element={<UserPage />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />

@@ -21,7 +21,6 @@ const CategoriesPage = () => {
 
   return (
     <div className="categories-page text-center">
-      <h1 className="mb-4">Shop by Categories</h1>
       <Row className="justify-content-center">
         {displayedCategories.map((category, index) => (
           <Col
@@ -51,9 +50,21 @@ const CategoriesPage = () => {
         ))}
       </Row>
       {categories.length > 4 && (
-        <Button variant="primary" onClick={handleShowAllClick} className="mt-3">
-          {showAll ? "Show Less" : "Show All Categories"}
-        </Button>
+        <div className="d-flex justify-content-end mt-3">
+          <Button
+            style={{
+              backgroundColor: "#FF5733", // Vibrant color
+              borderColor: "#FF5733",
+              color: "#fff",
+              fontWeight: "bold",
+              borderRadius: "20px",
+              padding: "0.5rem 1.5rem",
+            }}
+            onClick={handleShowAllClick}
+          >
+            {showAll ? "Show Less" : "Show All Categories"}
+          </Button>
+        </div>
       )}
     </div>
   );
