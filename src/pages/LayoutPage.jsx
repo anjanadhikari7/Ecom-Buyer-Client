@@ -20,7 +20,9 @@ const LayoutPage = () => {
         <div>
           <NavBar />
         </div>
-        <Outlet />
+        <div style={{ marginTop: "110px" }}>
+          <Outlet />
+        </div>
         <div className="p-2 footer rounded">
           <Footer />
         </div>

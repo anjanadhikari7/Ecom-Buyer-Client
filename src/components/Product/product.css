@@ -59,7 +59,7 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #333;
-  transition: opacity 0.2s ease, transform 0.9s ease;
+  transition: opacity 0.2s ease, transform 0.5s ease;
 }
 
 .sales-price {

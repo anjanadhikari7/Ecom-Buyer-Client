@@ -13,3 +13,12 @@ export const getProducts = () => {
     url: PRODUCT_API_URL,
   });
 };
+
+// Get a product
+
+export const getProduct = (sku) => {
+  return axiosApiCall({
+    method: "get",
+    url: `${PRODUCT_API_URL}/${sku}`,
+  });
+};
