@@ -1,5 +1,6 @@
 import {
   getNewAccessJwt,
+  getUser,
   logoutUser,
   requestOTP,
   verifyOTP,

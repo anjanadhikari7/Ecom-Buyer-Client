@@ -6,6 +6,7 @@ import useForm from "../../../hooks/useForm";
 import { setIsLoading } from "../../../redux/user/userSlice";
 import { createUser } from "../../../axios/userAxios";
 import CustomInput from "../../CustomInput/customInput";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const initialFormData = {
   firstName: "",
@@ -16,20 +17,20 @@ const initialFormData = {
   password: "",
   confirmPassword: "",
 };
+
 const formValidation = (formData) => {
   const { password, confirmPassword } = formData;
-
   return password === confirmPassword;
 };
+
 const SignupForm = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { formData, handleOnChange, setFormData } = useForm(initialFormData);
   const { firstName, lastName, email, address, phone, password } = formData;
 
   const { isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  // handle form submit
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
@@ -37,8 +38,8 @@ const SignupForm = () => {
     if (!isValidPassword) {
       return toast.error("Password and confirm password should match");
     }
+
     dispatch(setIsLoading(true));
-    // call api via axios to create user
     const result = await createUser({
       firstName,
       lastName,
@@ -48,18 +49,21 @@ const SignupForm = () => {
       password,
     });
     dispatch(setIsLoading(false));
+
     if (result?.status === "error") {
-      dispatch(setIsLoading(false));
       return toast.error(result.message || "Cannot create user!");
     }
 
     setFormData(initialFormData);
-    toast.success(result.message || " Email verification link sent.");
+    toast.success(result.message || "Email verification link sent.");
+
+    // Navigate to login page on successful signup
+    navigate("/login");
   };
 
   return (
     <Container className="p-4 border shadow-lg rounded-4">
-      <Form onSubmit={(e) => handleOnSubmit(e)}>
+      <Form onSubmit={handleOnSubmit}>
         <h2 className="text-center mb-4">Create an Account</h2>
 
         <Row>

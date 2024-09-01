@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { FaRegUserCircle } from "react-icons/fa";
+import {
+  FaRegUserCircle,
+  FaHistory,
+  FaUserEdit,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import logo from "../../Utilities/logo.png";
 import useForm from "../../hooks/useForm";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesAction } from "../../redux/category/categoryActions";
 
@@ -20,6 +25,9 @@ const NavBar = () => {
   const { handleOnChange, formData } = useForm(initialFormData);
   const { categories } = useSelector((state) => state.category);
   const { totalQuantity } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleScroll = () => {
     if (window.scrollY > 20) {
@@ -38,6 +46,17 @@ const NavBar = () => {
 
   const handleModal = () => {
     setShowModal(!showModal);
+  };
+
+  const handleUserIconClick = () => {
+    if (!user) {
+      navigate("/login");
+    }
+  };
+
+  const handleDropdownSelect = (path) => {
+    navigate(path);
+    setShowModal(false); // Close the modal after navigation
   };
 
   return (
@@ -72,8 +91,7 @@ const NavBar = () => {
               xs={8}
               className="d-flex justify-content-end align-items-center"
             >
-              <IoIosSearch className="icon" onClick={handleModal} />
-              <FaRegUserCircle className="icon" />
+              <IoIosSearch className="icon me-3" onClick={handleModal} />
               <div style={{ position: "relative", display: "inline-block" }}>
                 <MdOutlineShoppingCart className="icon" />
                 {totalQuantity > 0 && (
@@ -100,6 +118,54 @@ const NavBar = () => {
                   </span>
                 )}
               </div>
+              {user ? (
+                <>
+                  <FaRegUserCircle className="icon me-2" />
+                  <span className="user-name">{user.firstName}</span>
+                  <Dropdown align="end" className="ms-3">
+                    <Dropdown.Toggle
+                      as="div"
+                      className="d-flex align-items-center"
+                      style={{ cursor: "pointer" }}
+                    ></Dropdown.Toggle>
+                    {user && (
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => handleDropdownSelect("/user")}
+                        >
+                          <FaRegUserCircle className="me-2" />
+                          My Account
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleDropdownSelect("/order-history")}
+                        >
+                          <FaHistory className="me-2" />
+                          Order History
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() =>
+                            handleDropdownSelect("/update-details")
+                          }
+                        >
+                          <FaUserEdit className="me-2" />
+                          Update Details
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => handleDropdownSelect("/logout")}
+                        >
+                          <FaSignOutAlt className="me-2" />
+                          Logout
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    )}
+                  </Dropdown>
+                </>
+              ) : (
+                <FaRegUserCircle
+                  className="icon"
+                  onClick={handleUserIconClick}
+                />
+              )}
             </Col>
           </Row>
         </Container>
@@ -132,11 +198,12 @@ const NavBar = () => {
                   type="text"
                   className="form-control me-2 wide-input"
                   placeholder="Search Anything...."
-                  handleOnChange={handleOnChange}
+                  onChange={handleOnChange}
+                  value={formData.searchText}
                 />
-                <button type="submit" className="btn btn-primary">
+                <Button type="submit" className="btn btn-primary">
                   Search
-                </button>
+                </Button>
               </div>
             </div>
           </Form>
