@@ -15,11 +15,12 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../Utilities/logo.png";
 import useForm from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesAction } from "../../redux/category/categoryActions";
+import { logoutUserAction } from "../../redux/user/userAction";
 
 const initialFormData = { searchText: "", category: "" };
 
 const NavBar = () => {
+  const dispatch = useDispatch();
   const [scrolled, setScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { handleOnChange, formData } = useForm(initialFormData);
@@ -27,7 +28,7 @@ const NavBar = () => {
   const { totalQuantity } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > 20) {
@@ -49,7 +50,7 @@ const NavBar = () => {
   };
 
   const handleUserIconClick = () => {
-    if (!user) {
+    if (!user?._id) {
       navigate("/login");
     }
   };
@@ -57,6 +58,11 @@ const NavBar = () => {
   const handleDropdownSelect = (path) => {
     navigate(path);
     setShowModal(false); // Close the modal after navigation
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUserAction(user.email));
+    navigate("/login"); // Redirect to login page after logout
   };
 
   return (
@@ -95,71 +101,44 @@ const NavBar = () => {
               <div style={{ position: "relative", display: "inline-block" }}>
                 <MdOutlineShoppingCart className="icon" />
                 {totalQuantity > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-5px",
-                      backgroundColor: "red",
-                      color: "white",
-                      borderRadius: "50%",
-                      padding: "2px 6px",
-                      fontSize: "0.75rem",
-                      fontWeight: "bold",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      width: "20px",
-                      height: "20px",
-                      lineHeight: "20px",
-                    }}
-                  >
-                    {totalQuantity}
-                  </span>
+                  <span className="cart-quantity-badge">{totalQuantity}</span>
                 )}
               </div>
-              {user ? (
-                <>
-                  <FaRegUserCircle className="icon me-2" />
-                  <span className="user-name">{user.firstName}</span>
-                  <Dropdown align="end" className="ms-3">
-                    <Dropdown.Toggle
-                      as="div"
-                      className="d-flex align-items-center"
-                      style={{ cursor: "pointer" }}
-                    ></Dropdown.Toggle>
-                    {user && (
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          onClick={() => handleDropdownSelect("/user")}
-                        >
-                          <FaRegUserCircle className="me-2" />
-                          My Account
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => handleDropdownSelect("/order-history")}
-                        >
-                          <FaHistory className="me-2" />
-                          Order History
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() =>
-                            handleDropdownSelect("/update-details")
-                          }
-                        >
-                          <FaUserEdit className="me-2" />
-                          Update Details
-                        </Dropdown.Item>
-                        <Dropdown.Item
-                          onClick={() => handleDropdownSelect("/logout")}
-                        >
-                          <FaSignOutAlt className="me-2" />
-                          Logout
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    )}
-                  </Dropdown>
-                </>
+              {user?._id ? (
+                <Dropdown align="end" className="ms-3">
+                  <Dropdown.Toggle
+                    as="button"
+                    className="d-flex align-items-center btn btn-link text-decoration-none dropdown-toggle"
+                    style={{ cursor: "pointer", color: "black" }}
+                  >
+                    <FaRegUserCircle className="icon me-2" />
+                    <span className="user-name">{user.firstName}</span>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="dropdown-menu-end">
+                    <Dropdown.Item
+                      onClick={() => handleDropdownSelect("/user")}
+                    >
+                      <FaRegUserCircle className="me-2" />
+                      My Account
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleDropdownSelect("/order-history")}
+                    >
+                      <FaHistory className="me-2" />
+                      Order History
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => handleDropdownSelect("/update-details")}
+                    >
+                      <FaUserEdit className="me-2" />
+                      Update Details
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>
+                      <FaSignOutAlt className="me-2" />
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               ) : (
                 <FaRegUserCircle
                   className="icon"

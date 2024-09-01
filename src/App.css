@@ -39,6 +39,51 @@
   padding: 10px 0;
   background-color: #afabab;
 }
+.navbar-shrink .dropdown-menu {
+  background-color: #afabab;
+}
+.navbar .dropdown-toggle {
+  /* Match this color to your navbar background color */
+
+  border: none; /* Remove border for consistency */
+  padding: 0.5rem; /* Optional: Add padding for better visual alignment */
+}
+
+.navbar .dropdown-menu {
+  background-color: #ccc; /* Match this color to your navbar background color */
+  border: none;
+}
+.navbar .dropdown-menu-end {
+  right: 0; /* Align the dropdown to the right edge */
+  left: auto; /* Ensure left positioning is auto to maintain right alignment */
+}
+
+.navbar .dropdown-item {
+  padding: 0.5rem 1rem; /* Adjust padding for consistent look */
+}
+
+.navbar .dropdown-item:hover {
+  color: #007bff;
+  background-color: #afabab; /* Optional: Add hover effect */
+}
+
+.cart-quantity-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red; /* You can adjust this color */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
 .logo {
   height: 100px;
   transition: height 0.3s ease-in-out;
