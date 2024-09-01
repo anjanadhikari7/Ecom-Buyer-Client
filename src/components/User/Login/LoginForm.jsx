@@ -1,14 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import useForm from "../../hooks/useForm";
-import CustomInput from "../CustomInput/customInput";
+
 import { Button, Container, Form, Spinner } from "react-bootstrap";
 import { loginFormFields } from "./loginFormFields";
 import { Link, useNavigate } from "react-router-dom";
-import { setIsLoading } from "../../redux/user/userSlice";
-import { loginUser } from "../../axios/userAxios";
+
 import { toast } from "react-toastify";
-import { autoLoginAction, getUserAction } from "../../redux/user/userActions";
+
 import { useEffect } from "react";
+import useForm from "../../../hooks/useForm";
+import { setIsLoading } from "../../../redux/user/userSlice";
+import { loginUser } from "../../../axios/userAxios";
+import { autoLoginAction, getUserAction } from "../../../redux/user/userAction";
+import CustomInput from "../../CustomInput/customInput";
 
 const initialFormData = {
   email: "",
@@ -51,7 +54,7 @@ const LoginForm = () => {
   useEffect(() => {
     // if user exists [logged in], navigate to admin homepage
     if (user?._id) {
-      navigate("/admin");
+      navigate("/");
     }
 
     // if no tokens, keep them in login page
@@ -71,6 +74,7 @@ const LoginForm = () => {
   return (
     <Container className="p-4 pb-0 border shadow-lg rounded-4">
       <Form onSubmit={(e) => handleOnSubmit(e)}>
+        <h2 className="text-center mb-4">Login</h2>
         {loginFormFields.map((field, index) => (
           <CustomInput
             key={index}
@@ -87,8 +91,7 @@ const LoginForm = () => {
         ))}
 
         <Button
-          variant="primary"
-          className="btn-lg w-100"
+          className="btn-lg w-100 btn-custom"
           type="submit"
           disabled={isLoading}
         >

@@ -1,0 +1,36 @@
+/* LoginPage.css */
+
+.position-relative {
+  position: relative;
+}
+
+.background-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/bg.jpg"); /* Path to your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px); /* Adjust blur intensity as needed */
+  z-index: -1; /* Ensures the background stays behind the content */
+}
+/* Custom button styles */
+.btn-custom {
+  background-color: #b5b3b3; /* Light color for the button */
+  color: #333; /* Darker text color for contrast */
+  border: 1px solid #ddd; /* Border color matching the button color */
+}
+
+.btn-custom:hover {
+  background-color: #aca9a9; /* Slightly darker on hover */
+  border-color: #ccc; /* Adjust border color on hover */
+}
+
+.btn-custom:focus,
+.btn-custom:active {
+  box-shadow: none; /* Remove default focus/active shadow */
+  outline: none; /* Remove default outline */
+}

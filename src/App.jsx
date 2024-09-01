@@ -10,13 +10,21 @@ import "./App.css";
 import UserPage from "./pages/UserPage";
 import AboutUsPage from "./components/About Us/AboutUs";
 import ProductPage from "./pages/ProductPage";
+import ShopProducts from "./pages/ShopProduct";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<LayoutPage />}>
+          <Route path="/signup" element={<SignupPage />} />
+          {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
+          {/* <Route path="/reset-password" element={<ResetEmailPage />} /> */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<ShopProducts />} />
           <Route path="/product/:sku" element={<ProductPage />} />
           <Route path="/user:_id" element={<UserPage />} />
           <Route path="/about" element={<AboutUsPage />} />

@@ -65,7 +65,11 @@ const ProductPage = () => {
       setQuantity(quantity - 1);
     }
   };
-  const productIsOnSale = product.salesPrice < product.price;
+
+  const salesStartDate = new Date(product.salesStartDate).getTime();
+  const salesEndDate = new Date(product.salesEndDate).getTime();
+  const now = Date.now();
+  const productIsOnSale = salesStartDate <= now && salesEndDate >= now;
   const discountPercentage = productIsOnSale
     ? Math.round(((product.price - product.salesPrice) / product.price) * 100)
     : 0;
@@ -127,12 +131,12 @@ const ProductPage = () => {
             </Row>
           </div>
         </Col>
-        <Col md={4}>
+        <Col md={5}>
           <div
             className="product-image"
             style={{
-              width: "100%",
-              height: "500px",
+              width: "auto",
+              height: "400px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -143,6 +147,7 @@ const ProductPage = () => {
               style={{
                 height: "100%",
                 width: "auto",
+                maxWidth: "400px",
                 objectFit: "cover",
               }}
             />
@@ -151,7 +156,7 @@ const ProductPage = () => {
         <Col md={5}>
           <div
             className="product-info"
-            style={{ marginLeft: "0px", flexGrow: "1" }}
+            style={{ marginLeft: "20px", flexGrow: "1" }}
           >
             <h2>{product.name}</h2>
             <div className="product-brand">{product.brand}</div>
