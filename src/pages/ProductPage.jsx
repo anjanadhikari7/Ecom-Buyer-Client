@@ -8,6 +8,7 @@ import {
   Image,
   InputGroup,
   Badge,
+  Alert,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +20,7 @@ const ProductPage = () => {
   const { sku } = useParams();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
+  const [warningMessage, setWarningMessage] = useState("");
 
   const product = useSelector((state) => state.product.product);
   const { items } = useSelector((state) => state.cart);
@@ -49,24 +51,51 @@ const ProductPage = () => {
 
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value > 0 && value <= product.quantity) {
-      setQuantity(value);
-    } else if (value > product.quantity) {
-      setQuantity(product.quantity);
+    const totalInCart = items.reduce(
+      (total, item) =>
+        item.sku === product.sku ? total + item.quantity : total,
+      0
+    );
+    const availableQuantity = product.quantity - totalInCart;
+
+    if (!isNaN(value) && value > 0) {
+      if (value <= availableQuantity) {
+        setQuantity(value);
+        setWarningMessage(""); // Clear warning if valid
+      } else {
+        setQuantity(availableQuantity);
+        setWarningMessage(
+          availableQuantity === 0
+            ? "Out of Stock"
+            : `Only ${availableQuantity} of this item is available.`
+        );
+      }
     } else {
-      setQuantity(1);
+      setQuantity(1); // Reset to 1 if invalid value
+      setWarningMessage(""); // Clear warning if invalid value
     }
   };
 
   const increaseQuantity = () => {
-    if (quantity < product.quantity) {
+    const totalInCart = items.reduce(
+      (total, item) =>
+        item.sku === product.sku ? total + item.quantity : total,
+      0
+    );
+    const availableQuantity = product.quantity - totalInCart;
+
+    if (quantity < availableQuantity) {
       setQuantity(quantity + 1);
+      setWarningMessage("");
+    } else {
+      setWarningMessage(`Only ${availableQuantity} of this item is available.`);
     }
   };
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      setWarningMessage("");
     }
   };
 
@@ -77,6 +106,7 @@ const ProductPage = () => {
       price: productIsOnSale ? product.salesPrice : product.price,
       quantity,
       thumbnail: product.thumbnail,
+      availableStock: product.quantity,
     };
 
     // Update cart items
@@ -104,6 +134,9 @@ const ProductPage = () => {
     // Dispatch actions
     dispatch(addItemToCartAction(updatedItems));
     dispatch(setTotalQuantity(newTotalQuantity));
+
+    // Reset quantity to 1
+    setQuantity(1);
   };
 
   const salesStartDate = new Date(product.salesStartDate).getTime();
@@ -113,6 +146,13 @@ const ProductPage = () => {
   const discountPercentage = productIsOnSale
     ? Math.round(((product.price - product.salesPrice) / product.price) * 100)
     : 0;
+
+  const totalInCart = items.reduce(
+    (total, item) => (item.sku === product.sku ? total + item.quantity : total),
+    0
+  );
+  const availableQuantity = product.quantity - totalInCart;
+  const isAddToCartDisabled = availableQuantity <= 0;
 
   return (
     <div
@@ -228,7 +268,11 @@ const ProductPage = () => {
                 <span>${product.price}</span>
               )}
             </div>
-            {/* Quantity Selector and Add to Cart Button */}
+            {warningMessage && (
+              <Alert variant="warning" className="mb-3">
+                {warningMessage}
+              </Alert>
+            )}
             <Row className="align-items-center justify-content-center">
               <Col xs="auto">
                 <InputGroup
@@ -291,22 +335,9 @@ const ProductPage = () => {
               </Col>
               <Col xs="auto">
                 <Button
-                  variant="primary"
-                  style={{
-                    width: "100%",
-                    backgroundColor: "#007bff",
-                    border: "none",
-                    padding: "0.5rem 1.2rem",
-                    borderRadius: "50px",
-                    transition: "background-color 0.3s ease",
-                  }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#0056b3")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundColor = "#007bff")
-                  }
                   onClick={handleAddtoCart}
+                  disabled={isAddToCartDisabled}
+                  style={{ width: "100%" }}
                 >
                   Add to Cart
                 </Button>
