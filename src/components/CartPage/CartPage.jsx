@@ -65,7 +65,15 @@ const CartPage = () => {
   };
 
   const handleRemoveItem = (sku) => {
-    dispatch(removeItem(sku));
+    const updatedItems = items.filter((item) => item.sku !== sku);
+    // Calculate the new total quantity
+    const newTotalQuantity = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+    // Dispatch actions to update cart and total quantity
+    dispatch(addItemToCartAction(updatedItems));
+    dispatch(setTotalQuantity(newTotalQuantity));
   };
 
   const updatedTotalPrice = items.reduce((acc, item) => {
