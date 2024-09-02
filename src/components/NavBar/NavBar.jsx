@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../../Utilities/logo.png";
 import useForm from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,6 +65,14 @@ const NavBar = () => {
     navigate("/login"); // Redirect to login page after logout
   };
 
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    // Add search logic here
+    console.log("Search submitted:", formData);
+    // For example, navigate to search results page or update state to show results
+    // navigate(`/search?query=${formData.searchText}&category=${formData.category}`);
+  };
+
   return (
     <>
       <Navbar
@@ -74,7 +82,7 @@ const NavBar = () => {
         <Container>
           <Row className="w-100 align-items-center">
             <Col xs={4} className="d-flex align-items-center">
-              <Navbar.Brand href="/">
+              <Navbar.Brand as={Link} to="/">
                 <img
                   src={logo}
                   className={`d-inline-block align-top p-0 logo ${
@@ -86,10 +94,18 @@ const NavBar = () => {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                  <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="/shop">Shop</Nav.Link>
-                  <Nav.Link href="/about">About</Nav.Link>
-                  <Nav.Link href="#contact">Contact</Nav.Link>
+                  <Nav.Link as={Link} to="/">
+                    Home
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/shop">
+                    Shop
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/about">
+                    About
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="#contact">
+                    Contact
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Col>
@@ -99,7 +115,10 @@ const NavBar = () => {
             >
               <IoIosSearch className="icon me-3" onClick={handleModal} />
               <div style={{ position: "relative", display: "inline-block" }}>
-                <MdOutlineShoppingCart className="icon" />
+                <MdOutlineShoppingCart
+                  className="icon"
+                  onClick={() => navigate("/cart")}
+                />
                 {totalQuantity > 0 && (
                   <span className="cart-quantity-badge">{totalQuantity}</span>
                 )}
@@ -116,19 +135,25 @@ const NavBar = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="dropdown-menu-end">
                     <Dropdown.Item
-                      onClick={() => handleDropdownSelect("/user")}
+                      as={Link}
+                      to="/user"
+                      onClick={() => setShowModal(false)}
                     >
                       <FaRegUserCircle className="me-2" />
                       My Account
                     </Dropdown.Item>
                     <Dropdown.Item
-                      onClick={() => handleDropdownSelect("/order-history")}
+                      as={Link}
+                      to="/order-history"
+                      onClick={() => setShowModal(false)}
                     >
                       <FaHistory className="me-2" />
                       Order History
                     </Dropdown.Item>
                     <Dropdown.Item
-                      onClick={() => handleDropdownSelect("/update-details")}
+                      as={Link}
+                      to="/update-details"
+                      onClick={() => setShowModal(false)}
                     >
                       <FaUserEdit className="me-2" />
                       Update Details
@@ -162,10 +187,15 @@ const NavBar = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSearchSubmit}>
             <div className="search-modal-content">
               <div className="d-flex w-100 align-items-center">
-                <select className="form-select me-2 bg-transparent">
+                <select
+                  className="form-select me-2 bg-transparent"
+                  name="category"
+                  onChange={handleOnChange}
+                  value={formData.category}
+                >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
                     <option key={category.title} value={category.title}>
@@ -179,6 +209,7 @@ const NavBar = () => {
                   placeholder="Search Anything...."
                   onChange={handleOnChange}
                   value={formData.searchText}
+                  name="searchText"
                 />
                 <Button type="submit" className="btn btn-primary">
                   Search

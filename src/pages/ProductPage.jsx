@@ -12,12 +12,16 @@ import {
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductAction } from "../redux/product/productActions";
+import { addItemToCartAction } from "../redux/cart/cartAction";
+import { setTotalQuantity } from "../redux/cart/cartSlice";
 
 const ProductPage = () => {
   const { sku } = useParams();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
+
   const product = useSelector((state) => state.product.product);
+  const { items } = useSelector((state) => state.cart);
 
   const [mainImage, setMainImage] = useState(null);
 
@@ -66,6 +70,42 @@ const ProductPage = () => {
     }
   };
 
+  const handleAddtoCart = () => {
+    const item = {
+      sku: product.sku,
+      name: product.name,
+      price: productIsOnSale ? product.salesPrice : product.price,
+      quantity,
+      thumbnail: product.thumbnail,
+    };
+
+    // Update cart items
+    const existingItemIndex = items.findIndex((i) => i.sku === product.sku);
+
+    let updatedItems;
+    if (existingItemIndex !== -1) {
+      // Item exists in the cart, update quantity
+      updatedItems = items.map((i, index) =>
+        index === existingItemIndex
+          ? { ...i, quantity: i.quantity + quantity }
+          : i
+      );
+    } else {
+      // New item to be added to the cart
+      updatedItems = [...items, item];
+    }
+
+    // Calculate the new total quantity
+    const newTotalQuantity = updatedItems.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    // Dispatch actions
+    dispatch(addItemToCartAction(updatedItems));
+    dispatch(setTotalQuantity(newTotalQuantity));
+  };
+
   const salesStartDate = new Date(product.salesStartDate).getTime();
   const salesEndDate = new Date(product.salesEndDate).getTime();
   const now = Date.now();
@@ -73,6 +113,7 @@ const ProductPage = () => {
   const discountPercentage = productIsOnSale
     ? Math.round(((product.price - product.salesPrice) / product.price) * 100)
     : 0;
+
   return (
     <div
       className="product-page"
@@ -265,7 +306,7 @@ const ProductPage = () => {
                   onMouseOut={(e) =>
                     (e.currentTarget.style.backgroundColor = "#007bff")
                   }
-                  // onClick={handleAddtoCart}
+                  onClick={handleAddtoCart}
                 >
                   Add to Cart
                 </Button>

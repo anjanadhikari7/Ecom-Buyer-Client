@@ -1,5 +1,7 @@
 import { setItems } from "./cartSlice";
 
-export const addItemToCart = (product, quantity) => (dispatch) => {
-  setItems();
+export const addItemToCartAction = (item) => (dispatch) => {
+  console.log("itemsAc", item);
+
+  dispatch(setItems(item));
 };
