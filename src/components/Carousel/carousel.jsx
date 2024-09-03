@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -18,10 +19,10 @@ const Carousel = () => {
       rewind={true}
       centeredSlides={true}
       autoplay={{
-        delay: 10000, // Slower transition time
+        delay: 10000,
         disableOnInteraction: false,
-        pauseOnMouseEnter: true, // Stops autoplay on hover
-        resumeOnMouseLeave: true, // Resumes autoplay when mouse leaves
+        pauseOnMouseEnter: true,
+        resumeOnMouseLeave: true,
       }}
       pagination={{
         clickable: true,
@@ -32,25 +33,33 @@ const Carousel = () => {
       <SwiperSlide>
         <div className="carousel-slide">
           <img src={home} alt="Home Image" />
-          <button className="shop-now-btn">Shop Now</button>
+          <Link to="/shop" className="shop-now-btn">
+            Shop Now
+          </Link>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="carousel-slide">
           <img src={phone} alt="Phone Image" />
-          <button className="shop-now-btn">Shop Now</button>
+          <Link to="/shop" className="shop-now-btn">
+            Shop Now
+          </Link>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="carousel-slide">
           <img src={accessories} alt="Accessories Image" />
-          <button className="shop-now-btn">Shop Now</button>
+          <Link to="/shop" className="shop-now-btn">
+            Shop Now
+          </Link>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="carousel-slide">
           <img src={playstation} alt="PlayStation Image" />
-          <button className="shop-now-btn">Shop Now</button>
+          <Link to="/shop" className="shop-now-btn">
+            Shop Now
+          </Link>
         </div>
       </SwiperSlide>
     </Swiper>

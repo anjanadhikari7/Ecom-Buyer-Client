@@ -32,7 +32,10 @@
   border-radius: 5px;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make sure it's treated as a button */
 }
+
 .carousel-slide:hover .shop-now-btn {
   opacity: 1;
 }

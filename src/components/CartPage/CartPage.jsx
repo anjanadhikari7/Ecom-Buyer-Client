@@ -11,12 +11,14 @@ import {
   Alert,
 } from "react-bootstrap";
 import { FaTrashAlt, FaCheck } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./CartPage.css";
 import { addItemToCartAction } from "../../redux/cart/cartAction";
 import { setTotalQuantity } from "../../redux/cart/cartSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const items = useSelector((state) => state.cart.items || []);
   const [editedItems, setEditedItems] = useState({});
   const [warningMessage, setWarningMessage] = useState(""); // State for warning message
@@ -92,7 +94,16 @@ const CartPage = () => {
         <Col md={8}>
           <h1>Your Cart</h1>
           {items.length === 0 ? (
-            <p>Your cart is empty. Start shopping to add items here!</p>
+            <>
+              <p>Your cart is empty. Start shopping to add items here!</p>
+              <Button
+                variant="primary"
+                className="vibrant-shop-button mt-3"
+                onClick={() => navigate("/shop")}
+              >
+                Go to Shop
+              </Button>
+            </>
           ) : (
             <>
               <ListGroup className="cart-list">
@@ -193,6 +204,14 @@ const CartPage = () => {
               >
                 <FaCheck /> Update Cart
               </Button>
+
+              <Button
+                variant="primary"
+                className="mt-3 mx-4"
+                onClick={() => navigate("/shop")}
+              >
+                Continue Shopping
+              </Button>
             </>
           )}
         </Col>
@@ -228,6 +247,7 @@ const CartPage = () => {
                 variant="primary"
                 className="w-100 mt-3"
                 disabled={items.length === 0}
+                onClick={() => navigate("/checkout")}
               >
                 Proceed to Checkout
               </Button>
