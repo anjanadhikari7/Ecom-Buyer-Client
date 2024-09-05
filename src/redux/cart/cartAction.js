@@ -5,3 +5,9 @@ export const addItemToCartAction = (item) => (dispatch) => {
 
   dispatch(setItems(item));
 };
+
+
+export const updateQuantityAction = (sku, edited) => (dispatch) => {
+
+
+}

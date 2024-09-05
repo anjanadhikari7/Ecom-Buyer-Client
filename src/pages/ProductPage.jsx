@@ -161,6 +161,7 @@ const ProductPage = () => {
         display: "flex",
         alignItems: "flex-start",
         padding: "20px",
+        margin: "0px",
       }}
     >
       <Row className="product-details" style={{ display: "flex" }}>
