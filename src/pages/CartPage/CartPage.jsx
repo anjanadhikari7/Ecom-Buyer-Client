@@ -247,7 +247,7 @@ const CartPage = () => {
                 variant="primary"
                 className="w-100 mt-3"
                 disabled={items.length === 0}
-                onClick={() => navigate("/checkout")}
+                onClick={() => navigate("/user-details")}
               >
                 Proceed to Checkout
               </Button>

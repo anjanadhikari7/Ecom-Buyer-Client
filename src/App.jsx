@@ -14,6 +14,7 @@ import CartPage from "./pages/CartPage/CartPage";
 import AboutUsPage from "./pages/About Us/AboutUs";
 import CheckoutPage from "./pages/checkout/CheckoutPages";
 import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
+import CheckOutUserDetails from "./components/Checkout/CheckOutUserDetalis";
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
           <Route path="/user:_id" element={<UserPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/about" element={<AboutUsPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/user-details" element={<CheckOutUserDetails />} />
         </Route>
 
         <Route path="/payment-success" element={<PaymentSuccessPage />} />

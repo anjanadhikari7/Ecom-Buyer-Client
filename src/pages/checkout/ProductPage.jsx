@@ -101,6 +101,7 @@ const ProductPage = () => {
 
   const handleAddtoCart = () => {
     const item = {
+      _id: product._id,
       sku: product.sku,
       name: product.name,
       price: productIsOnSale ? product.salesPrice : product.price,
