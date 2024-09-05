@@ -12,9 +12,9 @@ import {
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductAction } from "../redux/product/productActions";
-import { addItemToCartAction } from "../redux/cart/cartAction";
-import { setTotalQuantity } from "../redux/cart/cartSlice";
+import { getProductAction } from "../../redux/product/productActions";
+import { addItemToCartAction } from "../../redux/cart/cartAction";
+import { setTotalQuantity } from "../../redux/cart/cartSlice";
 
 const ProductPage = () => {
   const { sku } = useParams();

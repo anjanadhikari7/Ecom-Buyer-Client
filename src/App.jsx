@@ -1,19 +1,19 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CheckoutPage from "./pages/CheckoutPages";
-import HomePage from "./pages/HomePage";
-import LayoutPage from "./pages/LayoutPage";
 import "./App.css";
-import UserPage from "./pages/UserPage";
-import AboutUsPage from "./components/About Us/AboutUs";
-import ProductPage from "./pages/ProductPage";
-import ShopProducts from "./pages/ShopProduct";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
-import CartPage from "./components/CartPage/CartPage";
+import LayoutPage from "./pages/LayoutPage";
+import SignupPage from "./pages/authPage/SignupPage";
+import LoginPage from "./pages/authPage/LoginPage";
+import HomePage from "./pages/homepage/HomePage";
+import ShopProducts from "./pages/Shop/ShopProduct";
+import ProductPage from "./pages/checkout/ProductPage";
+import UserPage from "./pages/User/UserPage";
+import CartPage from "./pages/CartPage/CartPage";
+import AboutUsPage from "./pages/About Us/AboutUs";
+import CheckoutPage from "./pages/checkout/CheckoutPages";
+import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
 
 function App() {
   return (
@@ -34,7 +34,6 @@ function App() {
         </Route>
 
         <Route path="/payment-success" element={<PaymentSuccessPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
       <ToastContainer />
     </>

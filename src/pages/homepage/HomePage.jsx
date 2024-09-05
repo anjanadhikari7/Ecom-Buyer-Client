@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ProductSection from "../components/Product/productSection";
-import Carousel from "../components/Carousel/carousel";
-import CategoriesPage from "./CategoriesPage";
+import ProductSection from "../../components/Product/productSection";
+import Carousel from "../../components/Carousel/carousel";
+import CategoriesPage from "../categories/CategoriesPage";
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState(null);

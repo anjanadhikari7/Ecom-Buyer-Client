@@ -1,6 +1,6 @@
 import { Badge, Col, Container, Image, Row, Stack } from "react-bootstrap";
-import logo from "../assets/logo.png";
-import SignupForm from "../components/User/Signup/signupForm";
+import logo from "../../assets/logo.png";
+import SignupForm from "../../components/User/Signup/signupForm";
 import "./LoginPage.css"; // Import the CSS file for styling
 
 const SignupPage = () => {

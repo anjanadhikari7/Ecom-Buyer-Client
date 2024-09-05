@@ -1,6 +1,6 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CheckOutForm from "../components/CheckOutForm";
+import CheckOutForm from "../../components/CheckOutForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Alert, Container, Stack } from "react-bootstrap";
