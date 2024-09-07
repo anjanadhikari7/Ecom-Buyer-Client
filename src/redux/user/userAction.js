@@ -7,6 +7,7 @@ import {
   verifyOTP,
 } from "../../axios/userAxios";
 import { setIsLoading, setUser } from "./userSlice";
+import { setItems, setTotalQuantity } from "../cart/cartSlice";
 
 export const getUserAction = () => async (dispatch) => {
   const result = await getUser();
@@ -49,7 +50,8 @@ export const logoutUserAction = (email) => async (dispatch) => {
 
     // clear state
     dispatch(setUser({}));
-
+    dispatch(setItems([]));
+    dispatch(setTotalQuantity(0));
     return toast.success(result.message);
   }
 

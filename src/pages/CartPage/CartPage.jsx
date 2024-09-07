@@ -20,6 +20,7 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const items = useSelector((state) => state.cart.items || []);
+  const { user } = useSelector((state) => state.user);
   const [editedItems, setEditedItems] = useState({});
   const [warningMessage, setWarningMessage] = useState(""); // State for warning message
 
@@ -87,6 +88,13 @@ const CartPage = () => {
     (sku) =>
       editedItems[sku] === items.find((item) => item.sku === sku)?.quantity
   );
+  const handleCartCheckout = () => {
+    if (!user?._id) {
+      return navigate("/login");
+    } else {
+      return navigate("/user-details");
+    }
+  };
 
   return (
     <Container className="my-4 cart-container">
@@ -247,7 +255,7 @@ const CartPage = () => {
                 variant="primary"
                 className="w-100 mt-3"
                 disabled={items.length === 0}
-                onClick={() => navigate("/user-details")}
+                onClick={handleCartCheckout}
               >
                 Proceed to Checkout
               </Button>

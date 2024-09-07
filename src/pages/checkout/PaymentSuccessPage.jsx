@@ -8,7 +8,7 @@ const PaymentSuccessPage = () => {
           <h1 className="mb-4">Payment Successful!</h1>
           <p>Your order has been successfully processed.</p>
           <p>Thank you for shopping with us!</p>
-          <Link to="/checkout">
+          <Link to="/shop">
             <Button variant="outline-success">Continue Shopping</Button>
           </Link>
         </Col>

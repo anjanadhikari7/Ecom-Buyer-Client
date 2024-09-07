@@ -3,16 +3,20 @@ import { useSelector } from "react-redux";
 import { Button, Form, Row, Col, ListGroup, Image } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import CustomInput from "../CustomInput/customInput";
+import { useNavigate } from "react-router-dom";
 
 const CheckOutUserDetailsForm = () => {
   const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const initialFormData = {
     firstName: user.firstName || "",
     lastName: user.lastName || "",
     email: user.email || "",
+    phone: user.phone || "",
     address: user.address || "",
+    userId: user._id,
     products: items.map((item) => ({
       productId: item._id,
       quantity: item.quantity,
@@ -27,7 +31,8 @@ const CheckOutUserDetailsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData); // Submit logic here
+    console.log(formData);
+    navigate("/checkout");
   };
 
   return (
@@ -102,6 +107,16 @@ const CheckOutUserDetailsForm = () => {
             }}
             handleOnChange={handleOnChange}
           />
+          <CustomInput
+            label="Phone number"
+            inputAttributes={{
+              type: "String",
+              name: "phone",
+              value: formData.phone,
+              disabled: true,
+            }}
+            handleOnChange={handleOnChange}
+          />
 
           <CustomInput
             label="Address"
@@ -114,7 +129,7 @@ const CheckOutUserDetailsForm = () => {
           />
 
           <Button type="submit" variant="primary" className="mt-3">
-            Submit Order
+            Proceed to payment
           </Button>
         </Form>
       </Col>
