@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #000;
+  background-color: #ccc;
 }
 
 .circuit-board {
@@ -15,7 +15,7 @@
 
 .line {
   position: absolute;
-  background: #0f0;
+  background: rgb(7, 53, 7);
   width: 2px;
   height: 50px;
   animation: line-animation 1.5s infinite;

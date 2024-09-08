@@ -12,6 +12,7 @@ const CircuitBoardLoader = () => {
         <div className="node"></div>
         <div className="node"></div>
       </div>
+      <div></div>
     </div>
   );
 };
