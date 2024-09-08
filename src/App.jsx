@@ -15,6 +15,7 @@ import AboutUsPage from "./pages/About Us/AboutUs";
 import CheckoutPage from "./pages/checkout/CheckoutPages";
 import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
 import CheckOutUserDetails from "./components/Checkout/CheckOutUserDetalis";
+import OrderHistory from "./pages/User/OrderHistory";
 
 function App() {
   return (
@@ -28,12 +29,13 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopProducts />} />
           <Route path="/product/:sku" element={<ProductPage />} />
-          <Route path="/user:_id" element={<UserPage />} />
+          <Route path="/user" element={<UserPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/user-details" element={<CheckOutUserDetails />} />
           <Route path="/payment-success" element={<PaymentSuccessPage />} />
+          <Route path="/order-history" element={<OrderHistory />} />
         </Route>
       </Routes>
       <ToastContainer />

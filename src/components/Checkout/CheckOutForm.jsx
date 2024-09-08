@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import {
   useStripe,
   useElements,
@@ -22,28 +23,35 @@ import { createOrderAction } from "../../redux/order/orderAction";
 
 const CheckOutForm = () => {
   const navigate = useNavigate();
+  const { state } = useLocation(); // Get form data from navigation state
+  const { formData } = state || {}; // Destructure formData from state
   const [isLoading, setIsLoading] = useState(false);
   const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+
   // Utility function to generate a unique order ID
   const generateOrderId = () => {
     return "ORD-" + Math.random().toString(36).substr(2, 9).toUpperCase();
   };
+
   // Stripe hooks
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
 
+  // Handle form submission for payment and order processing
   const handleOnSubmit = async (e) => {
     e.preventDefault(); // Prevent page reload
 
+    // Ensure Stripe is properly loaded
     if (!stripe || !elements) {
       return toast.error("Stripe is not yet loaded.");
     }
 
-    // Prepare order data
+    // Generate order ID and prepare order data
+    const orderId = generateOrderId();
     const orderData = {
-      orderId: generateOrderId(),
+      orderId,
       products: items.map((item) => ({
         productId: item._id,
         productName: item.name,
@@ -51,7 +59,7 @@ const CheckOutForm = () => {
         quantity: item.quantity,
       })),
       userId: user._id,
-      address: user.address,
+      address: formData.address || user.address, // Use address from formData if available
       date: new Date(),
       totalPrice: items.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -59,38 +67,39 @@ const CheckOutForm = () => {
       ),
       status: "pending",
     };
-    console.log(orderData);
 
+    console.log(orderData);
     setIsLoading(true);
 
     try {
-      // Confirm payment without redirecting
+      // Confirm payment without redirecting to Stripe's own success page
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          receipt_email: user.email,
+          receipt_email: formData.email || user.email, // Use email from formData if available
         },
         redirect: "if_required",
       });
 
+      // If error occurs in Stripe payment
       if (error) {
-        // Handle error from Stripe
         throw new Error(error.message || "Could not process payment");
       }
 
-      // If payment is successful, send order data to backend
+      // Dispatch order creation action
       dispatch(createOrderAction(orderData));
-      // Navigate to order success page
-      navigate("/payment-success");
+
+      // Navigate to payment success page with the orderId passed in state
+      navigate("/payment-success", { state: { orderId } });
       toast.success("Thank you for your payment!");
     } catch (error) {
-      // Handle any errors
       toast.error(error.message || "An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Calculate the total amount from cart items
   const totalAmount = items
     .reduce((total, item) => total + item.price * item.quantity, 0)
     .toFixed(2);
@@ -99,6 +108,7 @@ const CheckOutForm = () => {
     <Container fluid className="px-5 py-4">
       <Row className="gx-3 gy-4 d-flex align-items-start">
         <Col md={5} className="p-0">
+          {/* CartComponent to display cart items */}
           <CartComponent
             className="flex-grow-1"
             style={{ height: "100vh", width: "30vw" }}
@@ -112,6 +122,7 @@ const CheckOutForm = () => {
             <Card.Body>
               <h3 className="text-center mb-4">Complete Your Payment</h3>
               <Form onSubmit={handleOnSubmit}>
+                {/* Stripe's PaymentElement for payment form */}
                 <PaymentElement />
                 <Form.Group className="mt-3">
                   <Form.Label>Total Amount</Form.Label>
@@ -122,6 +133,7 @@ const CheckOutForm = () => {
                     className="text-center"
                   />
                 </Form.Group>
+                {/* Submit button with loading spinner */}
                 <Button
                   type="submit"
                   variant="primary"

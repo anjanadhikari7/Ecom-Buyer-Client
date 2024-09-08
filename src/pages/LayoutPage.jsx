@@ -7,12 +7,14 @@ import { getProductsAction } from "../redux/product/productActions";
 import { getCategoriesAction } from "../redux/category/categoryActions";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
+import { getOrdersAction } from "../redux/order/orderAction";
 
 const LayoutPage = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getProductsAction());
     dispatch(getCategoriesAction());
+    dispatch(getOrdersAction());
   }, []);
   return (
     <Container fluid style={{ margin: 0 }}>

@@ -15,7 +15,11 @@ const CheckOutUserDetailsForm = () => {
     lastName: user.lastName || "",
     email: user.email || "",
     phone: user.phone || "",
-    address: user.address || "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    postalCode: "",
     userId: user._id,
     products: items.map((item) => ({
       productId: item._id,
@@ -29,12 +33,33 @@ const CheckOutUserDetailsForm = () => {
   const { handleOnChange, formData, setFormData } = useForm(initialFormData);
 
   useEffect(() => {
-    setFormData(initialFormData);
+    // Set the initial form data including the user's address components if available
+    setFormData({
+      ...initialFormData,
+      addressLine1: user.addressLine1 || "",
+      addressLine2: user.addressLine2 || "",
+      city: user.city || "",
+      state: user.state || "",
+      postalCode: user.postalCode || "",
+    });
   }, [user, items, setFormData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/checkout"); // Move to payment section
+    // Combine address fields into a single address string
+    const combinedAddress = `${formData.addressLine1} ${
+      formData.addressLine2 ? `, ${formData.addressLine2}` : ""
+    }, ${formData.city}, ${formData.state} ${formData.postalCode}`;
+    console.log(combinedAddress);
+
+    const updatedFormData = {
+      ...formData,
+      address: combinedAddress, // Combined address as a single string
+    };
+
+    // Use updatedFormData for further actions (e.g., sending to the backend)
+    console.log(updatedFormData); // For debugging
+    navigate("/checkout", { state: { formData: updatedFormData } }); // Move to payment section
   };
 
   return (
@@ -94,11 +119,53 @@ const CheckOutUserDetailsForm = () => {
           </Col>
         </Row>
         <CustomInput
-          label="Address"
+          label="Address Line 1"
           inputAttributes={{
             type: "text",
-            name: "address",
-            value: formData.address,
+            name: "addressLine1",
+            value: formData.addressLine1,
+          }}
+          handleOnChange={handleOnChange}
+        />
+        <CustomInput
+          label="Address Line 2 (optional)"
+          inputAttributes={{
+            type: "text",
+            name: "addressLine2",
+            value: formData.addressLine2,
+          }}
+          handleOnChange={handleOnChange}
+        />
+        <Row>
+          <Col md={6}>
+            <CustomInput
+              label="City"
+              inputAttributes={{
+                type: "text",
+                name: "city",
+                value: formData.city,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+          <Col md={6}>
+            <CustomInput
+              label="State"
+              inputAttributes={{
+                type: "text",
+                name: "state",
+                value: formData.state,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+        </Row>
+        <CustomInput
+          label="Postal Code"
+          inputAttributes={{
+            type: "text",
+            name: "postalCode",
+            value: formData.postalCode,
           }}
           handleOnChange={handleOnChange}
         />

@@ -11,7 +11,6 @@ export const getOrdersAction = (userId) => async (dispatch) => {
   if (result?.status === "error") {
     return toast.error(result.message);
   }
-  console.log(result.data);
 
   dispatch(setOrders(result.data));
 };
