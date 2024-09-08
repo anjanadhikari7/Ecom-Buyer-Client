@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Button, Form, Row, Col, ListGroup, Image } from "react-bootstrap";
+import { Button, Form, Col, Container, Row } from "react-bootstrap";
 import useForm from "../../hooks/useForm";
 import CustomInput from "../CustomInput/customInput";
 import { useNavigate } from "react-router-dom";
 
 const CheckOutUserDetailsForm = () => {
-  const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+  const { items } = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
   const initialFormData = {
@@ -21,6 +21,9 @@ const CheckOutUserDetailsForm = () => {
       productId: item._id,
       quantity: item.quantity,
     })),
+    totalAmount: items
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2),
   };
 
   const { handleOnChange, formData, setFormData } = useForm(initialFormData);
@@ -31,109 +34,88 @@ const CheckOutUserDetailsForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    navigate("/checkout");
+    navigate("/checkout"); // Move to payment section
   };
 
   return (
-    <Row className="mt-5">
-      {/* Left side: Cart items */}
-      <Col md={6}>
-        <h3>Cart Items</h3>
-        {items.length === 0 ? (
-          <p>No items in the cart</p>
-        ) : (
-          <ListGroup variant="flush">
-            {items.map((item) => (
-              <ListGroup.Item
-                key={item._id}
-                className="d-flex align-items-center"
-              >
-                <Image
-                  src={item.thumbnail}
-                  alt={item.name}
-                  fluid
-                  rounded
-                  style={{
-                    width: "150px",
-                    height: "150px",
-                    marginRight: "10px",
-                  }}
-                />
-                <div>
-                  <strong>{item.name}</strong>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Price: ${item.price}</p>
-                </div>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        )}
-      </Col>
-
-      {/* Right side: Checkout form */}
-      <Col md={6}>
-        <h3>Checkout Details</h3>
-        <Form onSubmit={handleSubmit}>
-          <CustomInput
-            label="First Name"
-            inputAttributes={{
-              type: "text",
-              name: "firstName",
-              value: formData.firstName,
-              disabled: true,
-            }}
-            handleOnChange={handleOnChange}
+    <Container className="p-4 border shadow-lg rounded-4">
+      <h3 className="text-center mb-4">Checkout Details</h3>
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col md={6}>
+            <CustomInput
+              label="First Name"
+              inputAttributes={{
+                type: "text",
+                name: "firstName",
+                value: formData.firstName,
+                disabled: true,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+          <Col md={6}>
+            <CustomInput
+              label="Last Name"
+              inputAttributes={{
+                type: "text",
+                name: "lastName",
+                value: formData.lastName,
+                disabled: true,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6}>
+            <CustomInput
+              label="Email"
+              inputAttributes={{
+                type: "email",
+                name: "email",
+                value: formData.email,
+                disabled: true,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+          <Col md={6}>
+            <CustomInput
+              label="Phone Number"
+              inputAttributes={{
+                type: "text",
+                name: "phone",
+                value: formData.phone,
+                disabled: true,
+              }}
+              handleOnChange={handleOnChange}
+            />
+          </Col>
+        </Row>
+        <CustomInput
+          label="Address"
+          inputAttributes={{
+            type: "text",
+            name: "address",
+            value: formData.address,
+          }}
+          handleOnChange={handleOnChange}
+        />
+        <Form.Group className="mt-3">
+          <Form.Label>Total Amount</Form.Label>
+          <Form.Control
+            type="text"
+            value={`$${formData.totalAmount}`}
+            readOnly
+            className="text-center"
           />
-
-          <CustomInput
-            label="Last Name"
-            inputAttributes={{
-              type: "text",
-              name: "lastName",
-              value: formData.lastName,
-              disabled: true,
-            }}
-            handleOnChange={handleOnChange}
-          />
-
-          <CustomInput
-            label="Email"
-            inputAttributes={{
-              type: "email",
-              name: "email",
-              value: formData.email,
-              disabled: true,
-            }}
-            handleOnChange={handleOnChange}
-          />
-          <CustomInput
-            label="Phone number"
-            inputAttributes={{
-              type: "String",
-              name: "phone",
-              value: formData.phone,
-              disabled: true,
-            }}
-            handleOnChange={handleOnChange}
-          />
-
-          <CustomInput
-            label="Address"
-            inputAttributes={{
-              type: "text",
-              name: "address",
-              value: formData.address,
-            }}
-            handleOnChange={handleOnChange}
-          />
-
-          <Button type="submit" variant="primary" className="mt-3">
-            Proceed to payment
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+        </Form.Group>
+        <Button type="submit" variant="primary" className="btn-lg w-100 mt-3">
+          Proceed to Payment
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

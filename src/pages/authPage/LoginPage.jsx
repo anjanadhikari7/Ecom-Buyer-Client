@@ -1,6 +1,6 @@
 import { Col, Container, Image, Row, Stack } from "react-bootstrap";
 import logo from "../../assets/logo.png";
-import background from "../../assets/bg.jpg";
+
 import LoginForm from "../../components/User/Login/LoginForm";
 import "./LoginPage.css"; // Import the CSS file for styling
 

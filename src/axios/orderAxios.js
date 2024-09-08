@@ -15,6 +15,7 @@ export const getOrders = () => {
 export const createOrders = (OrderObj) => {
   return axiosApiCall({
     method: "post",
+    isPrivate: true,
     url: ORDER_API_URL,
     data: OrderObj,
   });

@@ -1,9 +1,12 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CheckOutForm from "../../components/CheckOutForm";
+import CheckOutForm from "../../components/Checkout/CheckOutForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Alert, Container, Stack } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -11,11 +14,29 @@ const stripePromise = loadStripe(import.meta.env.VITE_APP_PUBLISHABLE_KEY);
 
 const CheckoutPage = () => {
   const [clientSecret, setClientSecret] = useState();
+  const { items } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?._id) {
+      navigate("/login");
+      toast.warning("Please login first!");
+      return;
+    }
+    if (items.length < 1) {
+      navigate("/");
+      toast.warning("Please select some items first!");
+    }
+  }, []);
+  const totalAmount = items
+    .reduce((total, item) => total + item.price * item.quantity, 0)
+    .toFixed(2);
   const options = {
     // passing the client secret obtained from the server
     clientSecret: clientSecret,
   };
-  const totalAmountInDollar = 20;
+  const totalAmountInDollar = totalAmount;
   //call api to create a payment Intent as soon as we
 
   useEffect(() => {
@@ -36,10 +57,7 @@ const CheckoutPage = () => {
             gap={2}
             className=" d-flex align-items-center justify-content-center mt-5"
           >
-            <Alert key="primary" variant="primary">
-              <h2>Payment Checkout Form</h2>
-              <CheckOutForm />
-            </Alert>
+            <CheckOutForm />
           </Stack>
         </Elements>
       )}

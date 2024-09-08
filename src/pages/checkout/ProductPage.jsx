@@ -15,6 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProductAction } from "../../redux/product/productActions";
 import { addItemToCartAction } from "../../redux/cart/cartAction";
 import { setTotalQuantity } from "../../redux/cart/cartSlice";
+import { toast } from "react-toastify";
 
 const ProductPage = () => {
   const { sku } = useParams();
@@ -124,6 +125,7 @@ const ProductPage = () => {
     } else {
       // New item to be added to the cart
       updatedItems = [...items, item];
+      toast.success("Item added to cart!");
     }
 
     // Calculate the new total quantity

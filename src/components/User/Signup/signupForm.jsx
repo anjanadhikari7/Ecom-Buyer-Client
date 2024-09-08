@@ -6,7 +6,7 @@ import useForm from "../../../hooks/useForm";
 import { setIsLoading } from "../../../redux/user/userSlice";
 import { createUser } from "../../../axios/userAxios";
 import CustomInput from "../../CustomInput/customInput";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 const initialFormData = {
   firstName: "",
@@ -91,6 +91,9 @@ const SignupForm = () => {
         >
           {isLoading ? <Spinner animation="border" /> : "Signup"}
         </Button>
+        <p className="pt-2">
+          Already a user? <Link to="/Login">Login</Link>
+        </p>
       </Form>
     </Container>
   );

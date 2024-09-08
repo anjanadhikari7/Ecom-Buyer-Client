@@ -52,6 +52,7 @@ const NavBar = () => {
   const handleUserIconClick = () => {
     if (!user?._id) {
       navigate("/login");
+      console.log("logged out");
     }
   };
 
@@ -62,7 +63,8 @@ const NavBar = () => {
 
   const handleLogout = () => {
     dispatch(logoutUserAction(user.email));
-    navigate("/login"); // Redirect to login page after logout
+    navigate("/login");
+    console.log("logged out"); // Redirect to login page after logout
   };
 
   const handleSearchSubmit = (event) => {

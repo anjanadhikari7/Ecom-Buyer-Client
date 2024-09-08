@@ -50,7 +50,6 @@ const LoginForm = () => {
   };
   // Logic to handle what should happen if a user is logged in
   const { user } = useSelector((state) => state.user);
-  console.log("user", user);
 
   useEffect(() => {
     // if user exists [logged in], navigate to admin homepage

@@ -33,9 +33,8 @@ function App() {
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/user-details" element={<CheckOutUserDetails />} />
+          <Route path="/payment-success" element={<PaymentSuccessPage />} />
         </Route>
-
-        <Route path="/payment-success" element={<PaymentSuccessPage />} />
       </Routes>
       <ToastContainer />
     </>
