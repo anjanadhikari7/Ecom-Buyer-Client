@@ -4,6 +4,7 @@ import {
   getUser,
   logoutUser,
   requestOTP,
+  updateUser,
   verifyOTP,
 } from "../../axios/userAxios";
 import { setIsLoading, setUser } from "./userSlice";

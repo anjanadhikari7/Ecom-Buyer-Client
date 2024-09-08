@@ -25,6 +25,7 @@ const LayoutPage = () => {
         <div style={{ marginTop: "110px" }}>
           <Outlet />
         </div>
+
         <div className="p-2 footer rounded">
           <Footer />
         </div>

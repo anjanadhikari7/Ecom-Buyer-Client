@@ -16,6 +16,9 @@ import CheckoutPage from "./pages/checkout/CheckoutPages";
 import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
 import CheckOutUserDetails from "./components/Checkout/CheckOutUserDetalis";
 import OrderHistory from "./pages/User/OrderHistory";
+import SearchPage from "./pages/searchPage/SearchPage";
+import Contact from "./components/Contact/Contact";
+import EditUserDetails from "./pages/User/EditUserDetails";
 
 function App() {
   return (
@@ -28,10 +31,13 @@ function App() {
           {/* <Route path="/reset-password" element={<ResetEmailPage />} /> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopProducts />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/product/:sku" element={<ProductPage />} />
           <Route path="/user" element={<UserPage />} />
+          <Route path="/update-details" element={<EditUserDetails />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/about" element={<AboutUsPage />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/user-details" element={<CheckOutUserDetails />} />
           <Route path="/payment-success" element={<PaymentSuccessPage />} />

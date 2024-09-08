@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Card, Col, Row, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const CategoriesPage = () => {
   const { categories } = useSelector((state) => state.category);
   const [showAll, setShowAll] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleCategoryClick = (categoryTitle) => {
-    const section = document.getElementById(categoryTitle);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
+    // Navigate to /shop with the selected category title as a state
+    navigate("/shop", { state: { selectedCategory: categoryTitle } });
   };
 
   const handleShowAllClick = () => {
@@ -33,7 +33,7 @@ const CategoriesPage = () => {
           >
             <Card
               className="category-card text-center"
-              onClick={() => handleCategoryClick(category.title)}
+              onClick={() => handleCategoryClick(category.title)} // Call handleCategoryClick on click
               style={{ cursor: "pointer", width: "100%", maxWidth: "300px" }}
             >
               <Card.Img
@@ -53,7 +53,7 @@ const CategoriesPage = () => {
         <div className="d-flex justify-content-end mt-3">
           <Button
             style={{
-              backgroundColor: "#FF5733", // Vibrant color
+              backgroundColor: "#FF5733",
               borderColor: "#FF5733",
               color: "#fff",
               fontWeight: "bold",

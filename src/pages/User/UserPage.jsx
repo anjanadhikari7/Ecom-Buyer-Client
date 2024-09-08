@@ -79,7 +79,7 @@ const UserPage = () => {
             <Button
               variant="outline-secondary"
               className="mt-3"
-              onClick={() => navigate("/account/edit")}
+              onClick={() => navigate("/update-details")}
             >
               Edit Account Details
             </Button>

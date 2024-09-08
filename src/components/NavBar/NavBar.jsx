@@ -64,15 +64,17 @@ const NavBar = () => {
   const handleLogout = () => {
     dispatch(logoutUserAction(user.email));
     navigate("/login");
-    console.log("logged out"); // Redirect to login page after logout
   };
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    // Add search logic here
-    console.log("Search submitted:", formData);
-    // For example, navigate to search results page or update state to show results
-    // navigate(`/search?query=${formData.searchText}&category=${formData.category}`);
+    setShowModal(false);
+    // Navigate to the search results page with the query parameters
+    navigate(
+      `/search?query=${encodeURIComponent(
+        formData.searchText
+      )}&category=${encodeURIComponent(formData.category)}`
+    );
   };
 
   return (
@@ -105,7 +107,7 @@ const NavBar = () => {
                   <Nav.Link as={Link} to="/about">
                     About
                   </Nav.Link>
-                  <Nav.Link as={Link} to="#contact">
+                  <Nav.Link as={Link} to="/contact">
                     Contact
                   </Nav.Link>
                 </Nav>

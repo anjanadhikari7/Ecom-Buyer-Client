@@ -90,3 +90,12 @@ export const resetPassword = (email, password) => {
     data: { email, password },
   });
 };
+// Update User
+export const updateUser = (User) => {
+  return axiosApiCall({
+    method: "patch",
+    url: USER_API_URL,
+    data: User,
+    isPrivate: true,
+  });
+};
