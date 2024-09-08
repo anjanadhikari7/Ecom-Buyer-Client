@@ -40,7 +40,7 @@ const UserPage = () => {
             <Button
               variant="outline-secondary"
               className="mt-3"
-              onClick={() => navigate("/orders")}
+              onClick={() => navigate("/order-history")}
             >
               View Order History
             </Button>

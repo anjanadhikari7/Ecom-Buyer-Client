@@ -22,3 +22,13 @@ export const getProduct = (sku) => {
     url: `${PRODUCT_API_URL}/${sku}`,
   });
 };
+
+// UPDATE A PRODUCT
+export const updateProduct = (productObj) => {
+  return axiosApiCall({
+    method: "patch",
+    url: PRODUCT_API_URL,
+    data: productObj,
+    isPrivate: true,
+  });
+};

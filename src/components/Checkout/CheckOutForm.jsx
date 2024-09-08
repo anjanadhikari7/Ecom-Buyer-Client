@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios for backend request
 import { createOrderAction } from "../../redux/order/orderAction";
+import { updateProductAction } from "../../redux/product/productActions";
 
 const CheckOutForm = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const CheckOutForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
+  const { products } = useSelector((state) => state.product);
 
   // Utility function to generate a unique order ID
   const generateOrderId = () => {
@@ -88,6 +90,24 @@ const CheckOutForm = () => {
 
       // Dispatch order creation action
       dispatch(createOrderAction(orderData));
+      // Update product quantities
+      orderData.products.forEach((orderProduct) => {
+        // Find the product to update
+        const productToUpdate = products.find(
+          (product) => product._id === orderProduct.productId
+        );
+
+        if (productToUpdate) {
+          // Create the updated product object
+          const updatedProduct = {
+            ...productToUpdate,
+            quantity: productToUpdate.quantity - orderProduct.quantity,
+          };
+
+          // Dispatch action to update the product quantity
+          dispatch(updateProductAction(updatedProduct));
+        }
+      });
 
       // Navigate to payment success page with the orderId passed in state
       navigate("/payment-success", { state: { orderId } });
