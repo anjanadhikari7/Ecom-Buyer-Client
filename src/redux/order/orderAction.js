@@ -9,7 +9,7 @@ export const getOrdersAction = (userId) => async (dispatch) => {
   const result = await getOrders(userId);
 
   if (result?.status === "error") {
-    return toast.error(result.message);
+    return console.log(result.message);
   }
 
   dispatch(setOrders(result.data));
