@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -11,8 +11,10 @@ import {
   Pagination,
   Button,
 } from "react-bootstrap";
+import { getOrdersAction } from "../../redux/order/orderAction";
 
 const OrderHistory = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orders } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.user);
@@ -22,6 +24,7 @@ const OrderHistory = () => {
   const ordersPerPage = 5;
 
   useEffect(() => {
+    dispatch(getOrdersAction());
     if (!user?._id) {
       navigate("/login");
       toast.warning("Please login first!");
