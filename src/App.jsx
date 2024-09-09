@@ -19,6 +19,8 @@ import OrderHistory from "./pages/User/OrderHistory";
 import SearchPage from "./pages/searchPage/SearchPage";
 import Contact from "./components/Contact/Contact";
 import EditUserDetails from "./pages/User/EditUserDetails";
+import ResetEmailPage from "./pages/authPage/ResetEmailPage";
+import VerifyEmailPage from "./pages/authPage/VerifyEmailPage";
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutPage />}>
           <Route path="/signup" element={<SignupPage />} />
-          {/* <Route path="/verify-email" element={<VerifyEmailPage />} /> */}
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/login" element={<LoginPage />} />
-          {/* <Route path="/reset-password" element={<ResetEmailPage />} /> */}
+          <Route path="/reset-password" element={<ResetEmailPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopProducts />} />
           <Route path="/search" element={<SearchPage />} />

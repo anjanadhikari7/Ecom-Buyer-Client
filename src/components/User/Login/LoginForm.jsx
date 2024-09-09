@@ -99,7 +99,7 @@ const LoginForm = () => {
         </Button>
 
         <p className="pt-2">
-          Forgot Password? <Link to="reset-password">Reset Password</Link>
+          Forgot Password? <Link to="/reset-password">Reset Password</Link>
           <br />
           New User? <Link to="/signup">Sign Up</Link>
         </p>
